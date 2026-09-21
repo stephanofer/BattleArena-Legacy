@@ -173,10 +173,6 @@ public class BAPlayerListener implements Listener  {
 		getOrCreateRestorer(player).setHunger(val);
 	}
 
-	public static void restoreMagicOnReenter(ArenaPlayer player, Integer val) {
-		getOrCreateRestorer(player).setMagic(val);
-	}
-
 	public static void deEnchantOnEnter(ArenaPlayer player) {
 		getOrCreateRestorer(player).deEnchant();
 	}

@@ -90,9 +90,6 @@ public class BAClassesSerializer extends BaseConfig {
         if (mobs != null && !mobs.isEmpty()) {
             ac.setMobs(mobs);
         }
-        if (cs.contains("disguise")) {
-            ac.setDisguiseName(cs.getString("disguise"));
-        }
         if (commands != null && !commands.isEmpty()) {
             ac.setDoCommands(commands);
         }

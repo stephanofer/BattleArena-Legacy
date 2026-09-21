@@ -1,7 +1,6 @@
 package mc.alk.arena.controllers;
 
 import mc.alk.arena.BattleArena;
-import mc.alk.arena.controllers.plugins.HeroesController;
 import mc.alk.arena.objects.ArenaPlayer;
 import mc.alk.arena.util.Log;
 import mc.alk.arena.util.MessageUtil;
@@ -43,7 +42,6 @@ public class PlayerRestoreController {
     Integer exp;
     Double health;
     Integer hunger;
-    Integer magic;
     GameMode gamemode;
 
     PInv item;
@@ -94,10 +92,6 @@ public class PlayerRestoreController {
         if (hunger != null){
             handleHunger();}
 
-        /// Magic restore
-        if (magic != null){
-            handleMagic();}
-
         /// Restore Items
         if (item != null){
             handleItems();}
@@ -113,7 +107,6 @@ public class PlayerRestoreController {
         /// DeEnchant
         if (deEnchant){
             try{ EffectUtil.deEnchantAll(p);} catch (Exception e){/* do nothing */}
-            HeroesController.deEnchant(p);
         }
 
         if (effects !=null){
@@ -180,20 +173,6 @@ public class PlayerRestoreController {
                 if (pl != null) {
                     ArenaPlayer ap = PlayerController.toArenaPlayer(pl);
                     PlayerStoreController.setInventory(ap, items);
-                }
-            }
-        });
-    }
-
-    private void handleMagic() {
-        final int val = magic;
-        magic = null;
-        Scheduler.scheduleSynchronousTask(new Runnable() {
-            @Override
-            public void run() {
-                Player pl = player.regetPlayer();
-                if (pl != null) {
-                    HeroesController.setMagicLevel(pl, val);
                 }
             }
         });
@@ -275,25 +254,6 @@ public class PlayerRestoreController {
             } else {
                 PermissionsUtil.givePlayerInventoryPerms(p);
                 event.setRespawnLocation(loc);
-                /// Set a timed event to check to make sure the player actually arrived
-                /// Then do a teleport if needed
-                /// This can happen on servers where plugin conflicts prevent the respawn (somehow!!!)
-                if (HeroesController.enabled()){
-                    Bukkit.getScheduler().scheduleSyncDelayedTask(BattleArena.getSelf(), new Runnable(){
-                        @Override
-                        public void run() {
-                            Player pl = player.regetPlayer();
-                            if (pl != null){
-                                if (pl.getLocation().getWorld().getUID()!=loc.getWorld().getUID() ||
-                                        pl.getLocation().distanceSquared(loc) > 100){
-                                    TeleportController.teleport(p, loc);
-                                }
-                            } else {
-                                Util.printStackTrace();
-                            }
-                        }
-                    },2L);
-                }
             }
         } else { /// this is bad, how did they get a null tp loc
             Log.err(player.getName() + " respawn loc =null");
@@ -302,7 +262,7 @@ public class PlayerRestoreController {
 
     private boolean stillHandling() {
         return clearInventory || kill ||clearWool!=-1||teleportLocation!=null || tp2 != null || lastLoc!=null||
-                exp != null || health!=null || hunger!=null || magic !=null || gamemode!=null || item!=null ||
+                exp != null || health!=null || hunger!=null || gamemode!=null || item!=null ||
                 matchItems!=null||removeItems!=null||message!=null || backLocation!=null || effects!=null;
     }
 
@@ -364,10 +324,6 @@ public class PlayerRestoreController {
 
     public void setHunger(Integer hunger) {
         this.hunger = hunger;
-    }
-
-    public void setMagic(Integer magic) {
-        this.magic = magic;
     }
 
     public void setGamemode(GameMode gamemode) {
@@ -439,10 +395,6 @@ public class PlayerRestoreController {
 
     public Integer getHunger() {
         return hunger;
-    }
-
-    public Integer getMagic() {
-        return magic;
     }
 
     public GameMode getGamemode() {

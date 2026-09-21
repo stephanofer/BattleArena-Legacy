@@ -1,7 +1,6 @@
 package mc.alk.arena.objects.options;
 
 import mc.alk.arena.Defaults;
-import mc.alk.arena.controllers.plugins.MobArenaInterface;
 import mc.alk.arena.objects.ArenaClass;
 import mc.alk.arena.objects.ArenaPlayer;
 import mc.alk.arena.objects.ArenaSize;
@@ -129,8 +128,6 @@ public class StateOptions {
     public Double getHealth() {return getDouble(HEALTH);}
     public Double getHealthP() {return getDouble(HEALTHP);}
     public Integer getHunger() {return getInt(HUNGER);}
-    public Integer getMagic() { return getInt(MAGIC);}
-    public Integer getMagicP() { return getInt(MAGICP);}
     public Double getWithinDistance() {return getDouble(WITHINDISTANCE);}
     public GameMode getGameMode() {return getGameMode(GAMEMODE);}
     public List<CommandLineString> getDoCommands() {
@@ -174,9 +171,6 @@ public class StateOptions {
     public Integer getExperience(){return getInt(EXPERIENCE);}
     public boolean hasExperience(){return options.containsKey(EXPERIENCE);}
 
-    public String getDisguiseAllAs() {return getString(DISGUISEALLAS);}
-    public Boolean undisguise() {return options.containsKey(UNDISGUISE);}
-
     public boolean playerReady(ArenaPlayer p, World w) {
         if (p==null || !p.isOnline() || p.isDead() || p.getPlayer().isSleeping())
             return false;
@@ -187,10 +181,6 @@ public class StateOptions {
                 if (InventoryUtil.getItemAmountFromInventory(inv, is) < is.getAmount())
                     return false;
             }
-        }
-        /// Inside MobArena?
-        if (MobArenaInterface.hasMobArena() && MobArenaInterface.insideMobArena(p)){
-            return false;
         }
         if (options.containsKey(GAMEMODE)){
             GameMode gm = getGameMode();
@@ -289,11 +279,6 @@ public class StateOptions {
                 sb.append("\n").append("&5 -&c Not in same world\n");
                 isReady = false;
             }
-        }
-        /// Inside MobArena?
-        if (MobArenaInterface.hasMobArena() && MobArenaInterface.insideMobArena(p)){
-            isReady = false;
-            sb.append("\n").append("&5 - &4You are Inside Mob Arena");
         }
 
         if (needsArmor()){
@@ -471,12 +456,6 @@ public class StateOptions {
         return o == null ? null : (Map<Integer, ArenaClass>) o;
     }
 
-    public Map<Integer, String> getDisguises(){
-        Object o = options.get(GIVEDISGUISE);
-        return o == null ? null : (Map<Integer, String>) o;
-    }
-
-
     public List<String> getAddPerms() {
         final Object o = options.get(ADDPERMS);
         return o == null ? null : (List<String>) o;
@@ -513,8 +492,7 @@ public class StateOptions {
             if (value != null){
                 StateOption i = entry.getKey();
                 if (i.equals(TransitionOption.GIVECLASS) ||
-                        i.equals(TransitionOption.ENCHANTS) ||
-                        i.equals(TransitionOption.GIVEDISGUISE)) {
+                        i.equals(TransitionOption.ENCHANTS)) {
                     continue;
                 }
                 sb.append(":").append(value);

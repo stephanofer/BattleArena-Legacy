@@ -44,10 +44,6 @@ public enum TransitionOption implements StateOption {
     RESTOREGODMODE("restoreGodmode",false,TRANSITION),			/// Restore Godmode
     STOREFLIGHT("storeFlight",false,TRANSITION),				/// Store FLight
     RESTOREFLIGHT("restoreFlight",false,TRANSITION),			/// Restore Flight
-    STOREMAGIC("storeMagic",false,TRANSITION),					/// HEROES only: Store Magic
-    RESTOREMAGIC("restoreMagic",false,TRANSITION),				/// HEROES only: Restore Magic
-    STOREHEROCLASS("storeHeroClass",false,TRANSITION),			/// HEROES only: Store the hero class
-    RESTOREHEROCLASS("restoreHeroClass",false,TRANSITION),		/// HEROES only: Restore the hero class
 
     /// Default Options (options that need only be specified once anywhere (usually in defaults: ))
     ARMORTEAMS("armorTeams",false,CONFIG),					/// Use team armor colors when appropriate (right now just leather)
@@ -76,13 +72,10 @@ public enum TransitionOption implements StateOption {
     CLEAREXPERIENCE("clearExperience",false,TRANSITION), 		/// Clear the players experience
     GIVEITEMS("giveItems",false,TRANSITION), 					/// Give the player the items specified in items:
     GIVECLASS("giveClass",true,TRANSITION),					/// Give the player the specified class(if they don't already have one):
-    GIVEDISGUISE("giveDisguise",false,TRANSITION),				/// Give the player the specified class in classes:
     HEALTH("health",true,TRANSITION),							/// =<int> : set the players health to the given amount
     HEALTHP("healthp",true,TRANSITION),						/// =<int> : set the players health to the given percent
     HUNGER("hunger",true,TRANSITION),							/// =<int> : set the players food level
     EXPERIENCE("experience",true,TRANSITION),					/// =<int>: give the player this much exp
-    MAGIC("magic",true,TRANSITION),							/// =<int>: set the players magic to the given amount
-    MAGICP("magicp",true,TRANSITION),							/// =<int>: set the players magic to the given percent
     MONEY("money",true,TRANSITION),							/// =<double>: give the player money.  PREREQ: charge a fee to enter
     EFFECT("effect",true,TRANSITION),							/// =<string>: do the effect
     POTIONDAMAGEON("potionDamageOn",false,TRANSITION),			/// force potion damage to be on
@@ -97,8 +90,6 @@ public enum TransitionOption implements StateOption {
     ITEMDROPOFF("itemDropOff",false,STATE),				/// Stop the player from throwing/dropping items
     ITEMPICKUPOFF("itemPickupOff",false,STATE),			/// Stop the player from pickkingup items
     HUNGEROFF("hungerOff",false,STATE),			        /// Stop the player from decreasing hunger level
-    DISGUISEALLAS("disguiseAllAs",true,TRANSITION),			/// =<String> : Disguise the players as the given mob/player (needs DisguiseCraft)
-    UNDISGUISE("undisguise",false,TRANSITION),					/// Undisguise all players in the arena (needs DisguiseCraft)
     ENCHANTS("enchants",true,TRANSITION),						/// Give the Enchants found in enchants:
     DEENCHANT("deEnchant",false,TRANSITION),					/// DeEnchant all positive and negative effects from the player
     CLASSENCHANTS("classEnchants",false,TRANSITION),			/// regive the enchants from the class they have chosen
@@ -176,8 +167,6 @@ public enum TransitionOption implements StateOption {
                 return TransitionOption.ITEMDROPOFF;
             else if (str.equals("RESETREGION"))
                 return TransitionOption.WGRESETREGION;
-            else if (str.equals("DISGUISEALL"))
-                return TransitionOption.DISGUISEALLAS;
             else if (str.equals("COMMANDS") || str.equals("COMMAND"))
                 return TransitionOption.DOCOMMANDS;
             else if (str.equals("CLASS"))
@@ -203,9 +192,6 @@ public enum TransitionOption implements StateOption {
                 return Double.valueOf(value);
             case LEVELRANGE:
                 return MinMax.valueOf(value);
-            case DISGUISEALLAS:
-                return value;
-            case MAGIC: case MAGICP:
             case HUNGER:
             case EXPERIENCE:
             case INVULNERABLE:

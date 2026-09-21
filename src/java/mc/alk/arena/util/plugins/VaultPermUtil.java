@@ -2,7 +2,6 @@ package mc.alk.arena.util.plugins;
 
 import mc.alk.arena.BattleArena;
 import mc.alk.arena.Permissions;
-import mc.alk.arena.objects.messaging.AnnouncementOptions;
 import mc.alk.arena.util.Log;
 import net.milkbowl.vault.permission.Permission;
 
@@ -24,7 +23,7 @@ public class VaultPermUtil {
 					getServicesManager().getRegistration(net.milkbowl.vault.permission.Permission.class);
 			if (provider != null && provider.getProvider() != null) {
 				perm = provider.getProvider();
-			} else if (AnnouncementOptions.chatPlugin == null){
+			} else {
 				Log.info("[BattleArena] Vault Perms not detected");
 				return false;
 			}

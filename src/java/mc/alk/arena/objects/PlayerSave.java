@@ -3,7 +3,6 @@ package mc.alk.arena.objects;
 import mc.alk.arena.Defaults;
 import mc.alk.arena.controllers.MoneyController;
 import mc.alk.arena.controllers.plugins.EssentialsController;
-import mc.alk.arena.controllers.plugins.HeroesController;
 import mc.alk.arena.listeners.BAPlayerListener;
 import mc.alk.arena.serializers.InventorySerializer;
 import mc.alk.arena.util.Log;
@@ -33,8 +32,6 @@ public class PlayerSave {
     Double health;
     Double healthp;
     Integer hunger;
-    Integer magic;
-    Double magicp;
     PInv items;
     PInv matchItems;
     GameMode gamemode;
@@ -46,7 +43,6 @@ public class PlayerSave {
     Collection<PotionEffect> effects;
 
     Boolean flight;
-    String arenaClass;
     String oldTeam;
     private Object scoreboard;
     Double money;
@@ -89,22 +85,6 @@ public class PlayerSave {
 
     public void setHunger(Integer hunger) {
         this.hunger = hunger;
-    }
-
-    public Integer getMagic() {
-        return magic;
-    }
-
-    public void setMagic(Integer magic) {
-        this.magic = magic;
-    }
-
-    public Double getMagicp() {
-        return magicp;
-    }
-
-    public void setMagicp(Double magicp) {
-        this.magicp = magicp;
     }
 
     public PInv getItems() {
@@ -153,14 +133,6 @@ public class PlayerSave {
 
     public void setFlight(Boolean flight) {
         this.flight = flight;
-    }
-
-    public String getArenaClass() {
-        return arenaClass;
-    }
-
-    public void setArenaClass(String arenaClass) {
-        this.arenaClass = arenaClass;
     }
 
     public String getOldTeam() {
@@ -271,25 +243,6 @@ public class PlayerSave {
         return ret;
     }
 
-    public void storeMagic() {
-        if (!HeroesController.enabled() || magic != null)
-            return;
-        magic = HeroesController.getMagicLevel(player.getPlayer());
-    }
-
-    public void restoreMagic() {
-        if (!HeroesController.enabled() || magic ==null)
-            return;
-        HeroesController.setMagicLevel(player.getPlayer(), magic);
-        magic = null;
-    }
-
-    public Integer removeMagic() {
-        Integer ret = magic;
-        magic = null;
-        return ret;
-    }
-
     public void storeItems() {
         if (items != null)
             return;
@@ -393,18 +346,6 @@ public class PlayerSave {
         GameMode ret = gamemode;
         gamemode = null;
         return ret;
-    }
-
-    public void storeArenaClass() {
-        if (!HeroesController.enabled())
-            return;
-        arenaClass = HeroesController.getHeroClassName(player.getPlayer());
-    }
-
-    public void restoreArenaClass() {
-        if (!HeroesController.enabled() || arenaClass==null)
-            return;
-        HeroesController.setHeroClass(player.getPlayer(), arenaClass);
     }
 
     public void storeScoreboard() {

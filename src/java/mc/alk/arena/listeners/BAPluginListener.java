@@ -3,17 +3,10 @@ package mc.alk.arena.listeners;
 import mc.alk.arena.BattleArena;
 import mc.alk.arena.Defaults;
 import mc.alk.arena.controllers.MoneyController;
-import mc.alk.arena.controllers.plugins.DisguiseInterface;
 import mc.alk.arena.controllers.plugins.EssentialsController;
-import mc.alk.arena.controllers.plugins.FactionsController;
-import mc.alk.arena.controllers.plugins.HeroesController;
-import mc.alk.arena.controllers.plugins.McMMOController;
-import mc.alk.arena.controllers.plugins.MobArenaInterface;
 import mc.alk.arena.controllers.plugins.TagAPIController;
 import mc.alk.arena.controllers.plugins.TrackerController;
-import mc.alk.arena.controllers.plugins.VanishNoPacketInterface;
 import mc.alk.arena.objects.messaging.AnnouncementOptions;
-import mc.alk.arena.objects.messaging.plugins.HerochatPlugin;
 import mc.alk.arena.plugins.BAPlaceholderExtension;
 import mc.alk.arena.plugins.combattag.TagsOff;
 import mc.alk.arena.plugins.combattag.TagsOn;
@@ -43,44 +36,28 @@ public class BAPluginListener implements Listener {
 
     @EventHandler
     public void onPluginEnable(PluginEnableEvent event) {
-        // TODO: Clean this up
-        if (event.getPlugin().getName().equalsIgnoreCase("BattleTracker")) {
+        String pluginName = event.getPlugin().getName();
+        if (pluginName.equalsIgnoreCase("BattleTracker")) {
             loadBattleTracker();
-        } else if (event.getPlugin().getName().equalsIgnoreCase("CombatTag")) {
+        } else if (pluginName.equalsIgnoreCase("CombatTag")) {
             loadCombatTag();
-        } else if (event.getPlugin().getName().equalsIgnoreCase("DisguiseCraft")) {
-            loadDisguiseCraft();
-        } else if (event.getPlugin().getName().equalsIgnoreCase("Essentials")) {
+        } else if (pluginName.equalsIgnoreCase("Essentials")) {
             loadEssentials();
-        } else if (event.getPlugin().getName().equalsIgnoreCase("Factions")) {
-            loadFactions();
-        } else if (event.getPlugin().getName().equalsIgnoreCase("Herochat")) {
-            loadHeroChat();
-        } else if (event.getPlugin().getName().equalsIgnoreCase("Heroes")) {
-            loadHeroes();
-        } else if (event.getPlugin().getName().equalsIgnoreCase("LibsDisguises")) {
-            loadLibsDisguise();
-        } else if (event.getPlugin().getName().equalsIgnoreCase("mcMMO")) {
-            loadMcMMO();
-        } else if (event.getPlugin().getName().equalsIgnoreCase("MobArena")) {
-            loadMobArena();
-        } else if (event.getPlugin().getName().equalsIgnoreCase("MultiInv")) {
+        } else if (pluginName.equalsIgnoreCase("MultiInv")) {
             loadMultiInv();
-        } else if (event.getPlugin().getName().equalsIgnoreCase("Multiverse-Core")) {
+        } else if (pluginName.equalsIgnoreCase("Multiverse-Core")) {
             loadMultiverseCore();
-        } else if (event.getPlugin().getName().equalsIgnoreCase("Multiverse-Inventories")) {
+        } else if (pluginName.equalsIgnoreCase("Multiverse-Inventories")) {
             loadMultiverseInventory();
-        } else if (event.getPlugin().getName().equalsIgnoreCase("PlaceholderAPI")) {
+        } else if (pluginName.equalsIgnoreCase("PlaceholderAPI")) {
             loadPlaceholderAPI();
-        } else if (event.getPlugin().getName().equalsIgnoreCase("TagAPI")) {
+        } else if (pluginName.equalsIgnoreCase("TagAPI")) {
             loadTagAPI();
-        } else if (event.getPlugin().getName().equalsIgnoreCase("WorldEdit")) {
+        } else if (pluginName.equalsIgnoreCase("WorldEdit")) {
             loadWorldEdit();
-        } else if (event.getPlugin().getName().equalsIgnoreCase("WorldGuard")) {
+        } else if (pluginName.equalsIgnoreCase("WorldGuard")) {
             loadWorldGuard();
-        } else if (event.getPlugin().getName().equalsIgnoreCase("VanishNoPacket")) {
-            loadVanishNoPacket();
-        } else if (event.getPlugin().getName().equalsIgnoreCase("Vault")) {
+        } else if (pluginName.equalsIgnoreCase("Vault")) {
             loadVault();
         } else {
             loadOthers();
@@ -90,14 +67,7 @@ public class BAPluginListener implements Listener {
     public void loadAll() {
         loadBattleTracker();
         loadCombatTag();
-        loadDisguiseCraft();
         loadEssentials();
-        loadFactions();
-        loadHeroChat();
-        loadHeroes();
-        loadLibsDisguise();
-        loadMcMMO();
-        loadMobArena();
         loadMultiInv();
         loadMultiverseCore();
         loadMultiverseInventory();
@@ -105,7 +75,6 @@ public class BAPluginListener implements Listener {
         loadTagAPI();
         loadWorldEdit();
         loadWorldGuard();
-        loadVanishNoPacket();
         loadVault();
         loadOthers();
     }
@@ -124,25 +93,12 @@ public class BAPluginListener implements Listener {
     public void loadCombatTag() {
         Plugin plugin = Bukkit.getPluginManager().getPlugin("CombatTag");
         if (plugin != null) {
-            // CombatTagUtil will statically load and use CombatTagInterface
-            // so there's no need to do anything here
-            // except alert server admins that CombatTag was detected.
             Log.info("[BattleArena] CombatTag detected, enabling limited tag support");
         }
         if (CombatTagUtil.getCombatTagInterface() instanceof TagsOn) {
             Log.info("[BattleArena] CombatTagInterface is turned ON");
         } else if (CombatTagUtil.getCombatTagInterface() instanceof TagsOff) {
             Log.info("[BattleArena] CombatTagInterface is turned OFF");
-        }
-    }
-
-    public void loadDisguiseCraft() {
-        if (!DisguiseInterface.hasDC()) {
-            Plugin plugin = Bukkit.getPluginManager().getPlugin("DisguiseCraft");
-            if (plugin != null) {
-                DisguiseInterface.setDisguiseCraft(plugin);
-                Log.info("[BattleArena] DisguiseCraft detected, enabling disguises");
-            }
         }
     }
 
@@ -155,69 +111,6 @@ public class BAPluginListener implements Listener {
                 } else {
                     Log.info("[BattleArena] Essentials detected but could not hook properly");
                 }
-            }
-        }
-    }
-
-    public void loadFactions() {
-        if (!FactionsController.enabled()) {
-            Plugin plugin = Bukkit.getPluginManager().getPlugin("Factions");
-            if (plugin != null) {
-                if (FactionsController.setPlugin(true)) {
-                    Log.info("[BattleArena] Factions detected. Configurable power loss enabled (default no powerloss)");
-                } else {
-                    Log.info("[BattleArena] Old Factions detected that does not have a PowerLossEvent");
-                }
-            }
-        }
-    }
-
-    public void loadHeroChat() {
-        if (AnnouncementOptions.chatPlugin == null) {
-            Plugin plugin = Bukkit.getPluginManager().getPlugin("Herochat");
-            if (plugin != null) {
-                AnnouncementOptions.setPlugin(new HerochatPlugin());
-                Log.info("[BattleArena] Herochat detected, adding channel options");
-            }
-        }
-    }
-
-    public void loadHeroes() {
-        if (!HeroesController.enabled()) {
-            Plugin plugin = Bukkit.getPluginManager().getPlugin("Heroes");
-            if (plugin != null) {
-                HeroesController.setPlugin(plugin);
-                Log.info("[BattleArena] Heroes detected. Implementing heroes class options");
-            }
-        }
-    }
-
-    public void loadLibsDisguise() {
-        if (!DisguiseInterface.hasLibs()) {
-            Plugin plugin = Bukkit.getPluginManager().getPlugin("LibsDisguises");
-            if (plugin != null) {
-                DisguiseInterface.setLibsDisguise(plugin);
-                Log.info("[BattleArena] LibsDisguises detected. Implementing disguises");
-            }
-        }
-    }
-
-    public void loadMcMMO() {
-        if (!McMMOController.enabled()) {
-            Plugin plugin = Bukkit.getPluginManager().getPlugin("mcMMO");
-            if (plugin != null) {
-                McMMOController.setEnable(true);
-                Log.info("[BattleArena] mcMMO detected. Implementing disabled skills options");
-            }
-        }
-    }
-
-    public void loadMobArena() {
-        if (!MobArenaInterface.hasMobArena()) {
-            Plugin plugin = Bukkit.getPluginManager().getPlugin("MobArena");
-            if (plugin != null) {
-                MobArenaInterface.setPlugin(plugin);
-                Log.info("[BattleArena] MobArena detected.  Implementing no add when in MobArena");
             }
         }
     }
@@ -287,16 +180,6 @@ public class BAPluginListener implements Listener {
             if (plugin != null) {
                 TagAPIController.setEnable(true);
                 Log.info("[BattleArena] TagAPI detected. Implementing Team colored player names");
-            }
-        }
-    }
-
-    public void loadVanishNoPacket() {
-        if (!VanishNoPacketInterface.enabled()) {
-            Plugin plugin = Bukkit.getPluginManager().getPlugin("VanishNoPacket");
-            if (plugin != null) {
-                VanishNoPacketInterface.setPlugin(plugin);
-                Log.info("[BattleArena] VanishNoPacket detected. Invisibility fix is disabled for vanished players not in an arena");
             }
         }
     }

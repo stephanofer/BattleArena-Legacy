@@ -143,7 +143,7 @@ public class BattleArena extends JavaPlugin {
         FileUpdater.makeIfNotExists(new File(dir + "/otherPluginConfigs"));
         FileUpdater.makeIfNotExists(new File(dir + "/victoryConditions"));
 
-        for (String c : new String[]{"HeroesConfig", "McMMOConfig", "WorldGuardConfig"}){
+        for (String c : new String[]{"WorldGuardConfig"}){
             try{
                 String source = "/default_files/otherPluginConfigs/"+c+".yml";
                 String dest = dir.getPath() + "/otherPluginConfigs/"+c+".yml";
@@ -492,7 +492,7 @@ public class BattleArena extends JavaPlugin {
     /**
      * Is the player inside of the BattleArena system
      * This means one of the following
-     * Player is in a queue, in a competition, being challenged, inside MobArena,
+     * Player is in a queue, in a competition, being challenged,
      * being challenged to a duel, being invited to a team
      * <p/>
      * If a player is in an Arena or in a Competition this is always true

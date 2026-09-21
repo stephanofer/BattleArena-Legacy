@@ -3,3 +3,13 @@
 *.iml
 target/*
 dependency-reduced-pom.xml
+
+# Gradle
+.gradle/
+build/
+
+# Entorno local
+/libs/
+
+# Logs
+*.log

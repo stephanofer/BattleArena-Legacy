@@ -11,7 +11,6 @@ import mc.alk.arena.BattleArena;
 import mc.alk.arena.Defaults;
 import mc.alk.arena.Permissions;
 import mc.alk.arena.controllers.plugins.EssentialsController;
-import mc.alk.arena.controllers.plugins.VanishNoPacketInterface;
 import mc.alk.arena.listeners.BAPlayerListener;
 import mc.alk.arena.objects.ArenaPlayer;
 import mc.alk.arena.util.Log;
@@ -177,12 +176,6 @@ public class TeleportController implements Listener {
         for (Player player : players) {
             if (!player.isOnline()) {
                 continue;
-            }
-            if (VanishNoPacketInterface.isVanished(player)) {
-                if (!BattleArena.inArena(player)) {
-                    continue;
-                }
-                VanishNoPacketInterface.toggleVanish(player);
             }
             if (visible) {
                 tpedPlayer.showPlayer(player);

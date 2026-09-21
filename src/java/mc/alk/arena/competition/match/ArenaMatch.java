@@ -352,7 +352,7 @@ public class ArenaMatch extends Match {
     }
 
     /**
-     * Factions has slashless commands that get handled and then set to
+     * Some plugins have slashless commands that get handled and then set to
      * cancelled.... so we need to act before them
      *
      * @param event PlayerCommandPreprocessEvent

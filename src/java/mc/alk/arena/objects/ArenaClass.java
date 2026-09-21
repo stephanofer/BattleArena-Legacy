@@ -30,9 +30,6 @@ public class ArenaClass {
 	/** Mobs for this class*/
 	List<SpawnInstance> mobs;
 
-	/** Name of a disguise for this class */
-	String disguiseName;
-
 	/** List of commands to run when class is given */
 	List<CommandLineString> commands;
         
@@ -97,22 +94,6 @@ public class ArenaClass {
 	 */
 	public String getDisplayName() {
 		return displayName != null ? displayName : name;
-	}
-
-	/**
-	 * Get the disguise name
-	 * @return disguiseName
-	 */
-	public String getDisguiseName() {
-		return disguiseName;
-	}
-
-	/**
-	 * Set the disguise name
-	 * @param disguiseName String
-	 */
-	public void setDisguiseName(String disguiseName) {
-		this.disguiseName = disguiseName;
 	}
 
 	@Override

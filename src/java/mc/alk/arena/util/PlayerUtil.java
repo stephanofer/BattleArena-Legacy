@@ -5,7 +5,6 @@ import java.util.UUID;
 
 import mc.alk.arena.Defaults;
 import mc.alk.arena.controllers.plugins.EssentialsController;
-import mc.alk.arena.controllers.plugins.HeroesController;
 import mc.alk.arena.objects.ArenaPlayer;
 import mc.alk.arena.objects.CommandLineString;
 
@@ -26,38 +25,16 @@ public class PlayerUtil {
     }
 
     public static void setHealthP(final Player player, final Double health) {
-        setHealthP(player,health, false);
-    }
-
-    public static void setHealthP(final Player player, final Double health, boolean skipHeroes) {
-        if (!skipHeroes && HeroesController.enabled()){
-            HeroesController.setHealthP(player,health);
-            return;
-        }
-        double val = (player.getMaxHealth() * health/100.0);
-        setHealth(player,val);
+        double val = (player.getMaxHealth() * health / 100.0);
+        setHealth(player, val);
     }
 
     public static void setHealth(final Player player, final Double health) {
-        setHealth(player,health,false);
-    }
-
-    public static void setHealth(final Player player, final Double health, boolean skipHeroes) {
-        if (!skipHeroes && HeroesController.enabled()){
-            HeroesController.setHealth(player,health);
-            return;
-        }
-
         mc.alk.battlebukkitlib.PlayerUtil.setHealth(player, health);
     }
 
     public static Double getHealth(Player player) {
-        return getHealth(player,false);
-    }
-
-    public static Double getHealth(Player player, boolean skipHeroes) {
-        return !skipHeroes && HeroesController.enabled() ?
-                HeroesController.getHealth(player) : mc.alk.battlebukkitlib.PlayerUtil.getHealth(player);
+        return mc.alk.battlebukkitlib.PlayerUtil.getHealth(player);
     }
 
     public static void setInvulnerable(Player player, Integer invulnerableTime) {

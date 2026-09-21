@@ -2,8 +2,6 @@ package mc.alk.arena.controllers;
 
 import mc.alk.arena.BattleArena;
 import mc.alk.arena.Defaults;
-import mc.alk.arena.controllers.plugins.DisguiseInterface;
-import mc.alk.arena.controllers.plugins.HeroesController;
 import mc.alk.arena.events.players.ArenaPlayerClassSelectedEvent;
 import mc.alk.arena.listeners.PlayerHolder;
 import mc.alk.arena.objects.ArenaClass;
@@ -63,14 +61,10 @@ public class ArenaClassController {
         if (oldClass != null){
             player.despawnMobs();
         }
-        if (HeroesController.enabled())
-            ac = giveHeroClass(player,ac);
         try{if (ac.getItems() != null)
             InventoryUtil.addItemsToInventory(player.getPlayer(), ac.getItems(),true, color);}
         catch (Exception e){/* do nothing, error would be reported inside InventoryUtil */}
         giveClassEnchants(player.getPlayer(),ac);
-        if (ac.getDisguiseName()!=null && DisguiseInterface.enabled())
-            DisguiseInterface.disguisePlayer(player.getPlayer(), ac.getDisguiseName());
         if (ac.getMobs() != null){
             try {
                 List<SpawnInstance> mobs = ac.getMobsClone();
@@ -86,22 +80,6 @@ public class ArenaClassController {
         if (player.getPreferredClass() == null){
             player.setPreferredClass(ac);}
         player.setCurrentClass(ac);
-    }
-
-    private static ArenaClass giveHeroClass(ArenaPlayer player, ArenaClass ac){
-        if (ac == ArenaClass.CHOSEN_CLASS){
-            String className = HeroesController.getHeroClassName(player.getPlayer());
-            if (className != null){
-                ArenaClass ac2 = ArenaClassController.getClass(className);
-                if (ac2 != null)
-                    return ac2;
-            }
-        }
-        /// Set them to the appropriate heroes class if one exists with this name
-        if (HeroesController.hasHeroClass(ac.getName())){
-            HeroesController.setHeroClass(player.getPlayer(), ac.getName());
-        }
-        return ac;
     }
 
     public static void giveClassEnchants(Player player, ArenaClass ac) {

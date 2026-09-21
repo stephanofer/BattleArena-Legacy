@@ -3,7 +3,6 @@ package mc.alk.arena.objects;
 import mc.alk.arena.competition.Competition;
 import mc.alk.arena.controllers.plugins.TrackerController;
 import mc.alk.arena.controllers.containers.AreaContainer;
-import mc.alk.arena.controllers.plugins.HeroesController;
 import mc.alk.arena.objects.arenas.Arena;
 import mc.alk.arena.objects.meta.PlayerMetaData;
 import mc.alk.arena.objects.spawns.EntitySpawn;
@@ -192,7 +191,7 @@ public class ArenaPlayer {
     }
 
     public int getLevel() {
-        return (HeroesController.enabled()) ? HeroesController.getLevel(player) : player.getLevel();
+        return player.getLevel();
     }
 
     public Competition getCompetition() {

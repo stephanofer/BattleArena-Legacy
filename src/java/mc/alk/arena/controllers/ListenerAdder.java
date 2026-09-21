@@ -2,7 +2,6 @@ package mc.alk.arena.controllers;
 
 import mc.alk.arena.Defaults;
 import mc.alk.arena.competition.match.Match;
-import mc.alk.arena.controllers.plugins.McMMOController;
 import mc.alk.arena.controllers.plugins.TagAPIController;
 import mc.alk.arena.listeners.PlayerHolder;
 import mc.alk.arena.listeners.competition.ArenaPlayerKillListener;
@@ -48,8 +47,6 @@ public class ListenerAdder {
             holder.addArenaListener(new ItemPickupListener(holder));}
         if (tops.hasAnyOption(TransitionOption.POTIONDAMAGEON)){
             holder.addArenaListener(new PotionListener(holder));}
-        if (McMMOController.enabled() && McMMOController.hasDisabledSkills()){
-            holder.addArenaListener(McMMOController.createNewListener());}
         holder.getParams().getDBTableName();
         if (tops.getAllOptions().containsKey(MatchState.ONKILL)) {
             holder.addArenaListener(new ArenaPlayerKillListener(holder.getParams()));

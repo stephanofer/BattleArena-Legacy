@@ -12,8 +12,6 @@ import mc.alk.arena.controllers.APIRegistrationController;
 import mc.alk.arena.controllers.EventController;
 import mc.alk.arena.controllers.OptionSetController;
 import mc.alk.arena.controllers.ParamController;
-import mc.alk.arena.controllers.plugins.HeroesController;
-import mc.alk.arena.controllers.plugins.McMMOController;
 import mc.alk.arena.executors.CustomCommandExecutor;
 import mc.alk.arena.executors.DuelExecutor;
 import mc.alk.arena.executors.EventExecutor;
@@ -88,7 +86,6 @@ public class BAConfigSerializer extends BaseConfig {
         ArenaMatch.setEnabledCommands(config.getStringList("enabledCommands"));
         ArenaMatchQueue.setDisabledCommands(config.getStringList("disabledQueueCommands"));
         ArenaMatchQueue.setEnabledCommands(config.getStringList("enabledQueueCommands"));
-        loadOtherFiles();
 
         if (Defaults.TESTSERVER) {
             return;
@@ -296,10 +293,8 @@ public class BAConfigSerializer extends BaseConfig {
             StateOptions tops = new StateOptions();
             tops.addOption(TransitionOption.STOREEXPERIENCE);
             tops.addOption(TransitionOption.STOREGAMEMODE);
-            tops.addOption(TransitionOption.STOREHEROCLASS);
             tops.addOption(TransitionOption.STOREHEALTH);
             tops.addOption(TransitionOption.STOREHUNGER);
-            tops.addOption(TransitionOption.STOREMAGIC);
             tops.addOption(TransitionOption.CLEARINVENTORY);
             tops.addOption(TransitionOption.CLEAREXPERIENCE);
             tops.addOption(TransitionOption.STOREITEMS);
@@ -311,10 +306,8 @@ public class BAConfigSerializer extends BaseConfig {
             tops = new StateOptions();
             tops.addOption(TransitionOption.RESTOREEXPERIENCE);
             tops.addOption(TransitionOption.RESTOREGAMEMODE);
-            tops.addOption(TransitionOption.RESTOREHEROCLASS);
             tops.addOption(TransitionOption.RESTOREHEALTH);
             tops.addOption(TransitionOption.RESTOREHUNGER);
-            tops.addOption(TransitionOption.RESTOREMAGIC);
             tops.addOption(TransitionOption.RESTOREITEMS);
             tops.addOption(TransitionOption.CLEARINVENTORY);
             tops.addOption(TransitionOption.DEENCHANT);
@@ -354,11 +347,6 @@ public class BAConfigSerializer extends BaseConfig {
         return an;
     }
 
-    private void loadOtherFiles() {
-        loadHeroes();
-        loadMcMMO();
-    }
-
     public void loadVictoryConditions() {
         for (VictoryType vt : VictoryType.values()) {
             String name = vt.getName();
@@ -395,41 +383,6 @@ public class BAConfigSerializer extends BaseConfig {
         } else {
             return loadOtherConfigSection(BattleArena.getSelf().getDataFolder()
                     + "/otherPluginConfigs/WorldGuardConfig.yml");
-        }
-    }
-
-    private void loadHeroes() {
-        if (HeroesController.enabled()) {
-            /// Look for it in the old location first, config.yml
-            List<String> disabled = config.getStringList("disabledHeroesSkills");
-            if (disabled != null && !disabled.isEmpty()) {
-                HeroesController.addDisabledCommands(disabled);
-            } else { /// look for options in the new config
-                ConfigurationSection cs = loadOtherConfigSection(BattleArena.getSelf().getDataFolder()
-                        + "/otherPluginConfigs/HeroesConfig.yml");
-                if (cs == null) {
-                    return;
-                }
-                disabled = cs.getStringList("disabledSkills");
-                if (disabled != null && !disabled.isEmpty()) {
-                    HeroesController.addDisabledCommands(disabled);
-                }
-            }
-        }
-    }
-
-    private void loadMcMMO() {
-        if (McMMOController.enabled()) {
-            /// Look for it in the old location first, config.yml
-            ConfigurationSection cs = loadOtherConfigSection(BattleArena.getSelf().getDataFolder()
-                    + "/otherPluginConfigs/McMMOConfig.yml");
-            if (cs == null) {
-                return;
-            }
-            List<String> disabled = cs.getStringList("disabledSkills");
-            if (disabled != null && !disabled.isEmpty()) {
-                McMMOController.setDisabledSkills(disabled);
-            }
         }
     }
 }

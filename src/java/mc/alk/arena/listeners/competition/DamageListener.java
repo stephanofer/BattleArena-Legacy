@@ -1,7 +1,6 @@
 package mc.alk.arena.listeners.competition;
 
 import mc.alk.arena.BattleArena;
-import mc.alk.arena.controllers.plugins.HeroesController;
 import mc.alk.arena.listeners.PlayerHolder;
 import mc.alk.arena.objects.ArenaPlayer;
 import mc.alk.arena.objects.PVPState;
@@ -92,8 +91,7 @@ public class DamageListener implements ArenaListener{
 			if (t != null && t.hasMember(target)){ /// attacker is on the same team
 				event.setCancelled(true);
 			} else {/// different teams... lets make sure they can actually hit
-			    if (!HeroesController.enabled())
-				    event.setCancelled(false);
+				event.setCancelled(false);
 			}
 			break;
 		case OFF:

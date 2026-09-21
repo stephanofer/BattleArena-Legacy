@@ -1,6 +1,5 @@
 package mc.alk.arena.controllers;
 
-import mc.alk.arena.controllers.plugins.HeroesController;
 import mc.alk.arena.events.players.ArenaPlayerLeaveEvent;
 import mc.alk.arena.objects.ArenaPlayer;
 import mc.alk.arena.objects.MatchParams;
@@ -38,15 +37,11 @@ public enum TeamController implements Listener {
 	 * @return Team
 	 */
 	public static ArenaTeam getTeam(ArenaPlayer player) {
-		ArenaTeam at = INSTANCE.selfFormedTeams.get(player.getID());
-        if (at == null && HeroesController.enabled())
-            return HeroesController.getTeam(player.getPlayer());
-        return at;
+		return INSTANCE.selfFormedTeams.get(player.getID());
     }
 
     public boolean inSelfFormedTeam(ArenaPlayer player){
-        return (INSTANCE.selfFormedTeams.containsKey(player.getID()) ||
-                (HeroesController.enabled() && HeroesController.getTeam(player.getPlayer() )!=null));
+        return INSTANCE.selfFormedTeams.containsKey(player.getID());
     }
 
 	public ArenaTeam getSelfFormedTeam(ArenaPlayer player) {

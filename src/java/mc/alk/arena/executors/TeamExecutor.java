@@ -6,7 +6,6 @@ import mc.alk.arena.competition.events.Event;
 import mc.alk.arena.controllers.EventController;
 import mc.alk.arena.controllers.PlayerController;
 import mc.alk.arena.controllers.TeamController;
-import mc.alk.arena.controllers.plugins.HeroesController;
 import mc.alk.arena.objects.ArenaPlayer;
 import mc.alk.arena.objects.teams.ArenaTeam;
 import mc.alk.arena.objects.teams.FormingTeam;
@@ -166,9 +165,6 @@ public class TeamExecutor extends CustomCommandExecutor {
 		ArenaTeam t = teamc.getSelfFormedTeam(player);
 		if (t== null){
 			return sendMessage(player,"&eYou aren't part of a team");}
-
-		if (HeroesController.enabled()){
-			HeroesController.removedFromTeam(t, player.getPlayer());}
 
 		teamc.removeSelfFormedTeam(t);
 		t.sendToOtherMembers(player,"&eYour team has been disbanded by " + player.getName());

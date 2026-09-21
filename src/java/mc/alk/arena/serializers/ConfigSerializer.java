@@ -19,7 +19,6 @@ import mc.alk.arena.controllers.Modules;
 import mc.alk.arena.controllers.OptionSetController;
 import mc.alk.arena.controllers.ParamController;
 import mc.alk.arena.controllers.StateController;
-import mc.alk.arena.controllers.plugins.DisguiseInterface;
 import mc.alk.arena.controllers.plugins.TrackerController;
 import mc.alk.arena.objects.ArenaClass;
 import mc.alk.arena.objects.ArenaParams;
@@ -526,13 +525,6 @@ public class ConfigSerializer extends BaseConfig{
             Log.printStackTrace(e);
         }
         try{
-            if (cs.contains("giveDisguise")){
-                tops.addOption(TransitionOption.GIVEDISGUISE, getArenaDisguises(cs.getConfigurationSection("giveDisguise")));}
-        } catch (Exception e){
-            Log.err("Error setting the value of giveDisguise ");
-            Log.printStackTrace(e);
-        }
-        try{
             if (cs.contains("doCommands")){
                 tops.addOption(TransitionOption.DOCOMMANDS, getDoCommands(cs.getStringList("doCommands")));}
         } catch (Exception e){
@@ -648,31 +640,6 @@ public class ConfigSerializer extends BaseConfig{
             classes.put(team, ac);
         }
         return classes;
-    }
-
-    public static HashMap<Integer,String> getArenaDisguises(ConfigurationSection cs){
-        HashMap<Integer,String> disguises = new HashMap<Integer,String>();
-        Set<String> keys = cs.getKeys(false);
-        for (String whichTeam: keys){
-            int team;
-            final String disguiseName = cs.getString(whichTeam);
-            if (whichTeam.equalsIgnoreCase("default")){
-                team = DisguiseInterface.DEFAULT;
-            } else {
-                try {
-                    team = Integer.valueOf(whichTeam.replaceAll("team", "")) - 1;
-                } catch(Exception e){
-                    Log.err("Couldnt find which team this disguise belongs to '" + whichTeam+"'");
-                    continue;
-                }
-            }
-            if (team ==-1){
-                Log.err("Couldnt find which team this disguise belongs to '" + whichTeam+"'");
-                continue;
-            }
-            disguises.put(team, disguiseName);
-        }
-        return disguises;
     }
 
     public static List<PotionEffect> getEffectList(ConfigurationSection cs, String nodeString) {

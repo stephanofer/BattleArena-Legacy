@@ -2,7 +2,6 @@ package mc.alk.arena.controllers;
 
 import mc.alk.arena.BattleArena;
 import mc.alk.arena.Defaults;
-import mc.alk.arena.controllers.plugins.HeroesController;
 import mc.alk.arena.listeners.BAPlayerListener;
 import mc.alk.arena.objects.ArenaPlayer;
 import mc.alk.arena.objects.PlayerSave;
@@ -48,10 +47,8 @@ public class PlayerStoreController {
         storeFlight(player);
         storeGamemode(player);
         storeHealth(player);
-        storeHeroClass(player);
         storeHunger(player);
         storeItems(player);
-        storeMagic(player);
         storeMatchItems(player);
         storeScoreboard(player);
     }
@@ -62,10 +59,8 @@ public class PlayerStoreController {
         restoreFlight(player);
         restoreGamemode(player);
         restoreHealth(player);
-        restoreHeroClass(player);
         restoreHunger(player);
         restoreItems(player);
-        restoreMagic(player);
         restoreMoney(player);
         restoreMatchItems(player);
         restoreScoreboard(player);
@@ -144,23 +139,6 @@ public class PlayerStoreController {
             return;
         save.restoreMoney();
     }
-
-
-    public void storeMagic(ArenaPlayer player) {
-        getOrCreateSave(player).storeMagic();
-    }
-
-    public void restoreMagic(ArenaPlayer p) {
-        PlayerSave save = getSave(p);
-        if (save == null || save.getMagic()==null)
-            return;
-        if (restoreable(p)){
-            save.restoreMagic();
-        } else {
-            BAPlayerListener.restoreMagicOnReenter(p, save.removeMagic());
-        }
-    }
-
 
     public void storeItems(ArenaPlayer player) {
         getOrCreateSave(player).storeItems();
@@ -299,32 +277,12 @@ public class PlayerStoreController {
         WorldGuardController.removeMember(p.getName(), region);
     }
 
-    public void storeHeroClass(ArenaPlayer player) {
-        getOrCreateSave(player).storeArenaClass();
-    }
-
-    public void restoreHeroClass(ArenaPlayer p) {
-        PlayerSave save = getSave(p);
-        if (save == null || save.getArenaClass()==null)
-            return;
-        if (restoreable(p)){
-            save.restoreArenaClass();
-        }
-    }
-
-    public void cancelExpLoss(ArenaPlayer p, boolean cancel) {
-        if (!HeroesController.enabled())
-            return;
-        HeroesController.cancelExpLoss(p.getPlayer(),cancel);
-    }
-
     public static PlayerStoreController getPlayerStoreController() {
         return INSTANCE;
     }
 
     public void deEnchant(Player p) {
         try {
-            HeroesController.deEnchant(p);
             EffectUtil.deEnchantAll(p);
             if (!p.isOnline() || p.isDead()) {
                 BAPlayerListener.deEnchantOnEnter(BattleArena.toArenaPlayer(p));

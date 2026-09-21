@@ -27,7 +27,6 @@ import mc.alk.arena.controllers.containers.GameManager;
 import mc.alk.arena.controllers.joining.AbstractJoinHandler;
 import mc.alk.arena.controllers.messaging.MatchMessager;
 import mc.alk.arena.controllers.messaging.MessageHandler;
-import mc.alk.arena.controllers.plugins.HeroesController;
 import mc.alk.arena.controllers.plugins.TrackerController;
 import mc.alk.arena.events.EventManager;
 import mc.alk.arena.events.matches.MatchCancelledEvent;
@@ -986,7 +985,6 @@ public abstract class Match extends Competition implements Runnable, ArenaContro
         }
         scoreboard.removeTeam(team);
         teams.remove(team);
-        HeroesController.removeTeam(team);
         return true;
     }
 
@@ -1126,7 +1124,6 @@ public abstract class Match extends Competition implements Runnable, ArenaContro
         if (Defaults.DEBUG_MATCH_TEAMS) {
             Log.info(getID() + " removedFromTeam(" + team.getName() + ":" + team.getId() + ")" + ap.getName());
         }
-        HeroesController.removedFromTeam(team, ap.getPlayer());
         scoreboard.removedFromTeam(team, ap);
     }
 
@@ -1172,9 +1169,6 @@ public abstract class Match extends Competition implements Runnable, ArenaContro
             TeamUtil.setTeamHead(team.getIndex(), player); // give wool heads
         }
 
-        if (cancelExpLoss) {
-            psc.cancelExpLoss(player, true);
-        }
         addInMatch(player);
     }
 
@@ -1265,9 +1259,6 @@ public abstract class Match extends Competition implements Runnable, ArenaContro
         if (alwaysOpen || cancelsIfGone) {
             joinHandler.leave(player);
             inGamePlayers.remove(player);
-        }
-        if (cancelExpLoss) {
-            psc.cancelExpLoss(player, false);
         }
         removeInMatch(player);
         player.setTeam(null);

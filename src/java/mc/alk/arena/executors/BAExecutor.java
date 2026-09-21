@@ -25,8 +25,6 @@ import mc.alk.arena.controllers.containers.RoomContainer;
 import mc.alk.arena.controllers.joining.AbstractJoinHandler;
 import mc.alk.arena.controllers.messaging.MessageHandler;
 import mc.alk.arena.controllers.plugins.EssentialsController;
-import mc.alk.arena.controllers.plugins.HeroesController;
-import mc.alk.arena.controllers.plugins.MobArenaInterface;
 import mc.alk.arena.controllers.plugins.TrackerController;
 import mc.alk.arena.events.arenas.ArenaCreateEvent;
 import mc.alk.arena.events.arenas.ArenaDeleteEvent;
@@ -1495,18 +1493,8 @@ public class BAExecutor extends CustomCommandExecutor {
             return false;
         }
 
-        /// Inside MobArena?
-        if (MobArenaInterface.hasMobArena()
-                && MobArenaInterface.insideMobArena(player)) {
-            if (showMessages) {
-                sendMessage(player, "&cYou need to finish with MobArena first!");
-            }
-            return false;
-        }
-
         /// Check for player in combat
-        if (CombatTagUtil.isTagged(player.getPlayer())
-                || (HeroesController.enabled() && HeroesController.isInCombat(player.getPlayer()))) {
+        if (CombatTagUtil.isTagged(player.getPlayer())) {
             if (showMessages) {
                 sendMessage(player, "&cYou are in combat!");
             }

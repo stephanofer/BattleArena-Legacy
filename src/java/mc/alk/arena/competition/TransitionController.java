@@ -8,8 +8,6 @@ import mc.alk.arena.controllers.ArenaController;
 import mc.alk.arena.controllers.MoneyController;
 import mc.alk.arena.controllers.PlayerStoreController;
 import mc.alk.arena.controllers.TeleportLocationController;
-import mc.alk.arena.controllers.plugins.DisguiseInterface;
-import mc.alk.arena.controllers.plugins.HeroesController;
 import mc.alk.arena.listeners.PlayerHolder;
 import mc.alk.arena.objects.ArenaClass;
 import mc.alk.arena.objects.ArenaPlayer;
@@ -189,12 +187,6 @@ public class TransitionController {
                 if (storeAll || mo.hasOption(TransitionOption.STOREHUNGER)) {
                     psc.storeHunger(player);
                 }
-                if (storeAll || mo.hasOption(TransitionOption.STOREMAGIC)) {
-                    psc.storeMagic(player);
-                }
-                if (storeAll || mo.hasOption(TransitionOption.STOREHEROCLASS)) {
-                    psc.storeHeroClass(player);
-                }
                 if (storeAll || mo.hasOption(TransitionOption.STOREGAMEMODE)) {
                     psc.storeGodmode(player);
                 }
@@ -215,12 +207,6 @@ public class TransitionController {
                 }
                 if (mo.hasOption(TransitionOption.HEALTHP)) {
                     PlayerUtil.setHealthP(p, mo.getHealthP());
-                }
-                if (mo.hasOption(TransitionOption.MAGIC)) {
-                    setMagicLevel(p, mo.getMagic());
-                }
-                if (mo.hasOption(TransitionOption.MAGICP)) {
-                    setMagicLevelP(p, mo.getMagicP());
                 }
                 if (hunger != null) {
                     PlayerUtil.setHunger(p, hunger);
@@ -245,12 +231,6 @@ public class TransitionController {
                 }
                 if (mo.deEnchant()) {
                     psc.deEnchant(p);
-                }
-                if (mo.undisguise() != null && mo.undisguise()) {
-                    DisguiseInterface.undisguise(p);
-                }
-                if (mo.getDisguiseAllAs() != null) {
-                    DisguiseInterface.disguisePlayer(p, mo.getDisguiseAllAs());
                 }
                 if (mo.getMoney() != null) {
                     MoneyController.add(player.getName(), mo.getMoney());
@@ -288,12 +268,6 @@ public class TransitionController {
                     ArenaClass ac = player.getCurrentClass();
                     if (ac != null) {
                         ArenaClassController.giveClassEnchants(p, ac);
-                    }
-                }
-                if (mo.hasOption(TransitionOption.GIVEDISGUISE) && DisguiseInterface.enabled()) {
-                    final String disguise = getDisguise(mo, teamIndex);
-                    if (disguise != null) { /// Give class items and effects
-                        DisguiseInterface.disguisePlayer(p, disguise);
                     }
                 }
                 if (mo.hasOption(TransitionOption.GIVEITEMS)) {
@@ -368,12 +342,6 @@ public class TransitionController {
             if (restoreAll || mo.hasOption(TransitionOption.RESTOREHUNGER)) {
                 psc.restoreHunger(player);
             }
-            if (restoreAll || mo.hasOption(TransitionOption.RESTOREMAGIC)) {
-                psc.restoreMagic(player);
-            }
-            if (restoreAll || mo.hasOption(TransitionOption.RESTOREHEROCLASS)) {
-                psc.restoreHeroClass(player);
-            }
             if (restoreAll || mo.hasOption(TransitionOption.RESTOREGODMODE)) {
                 psc.restoreGodmode(player);
             }
@@ -386,14 +354,6 @@ public class TransitionController {
             Log.printStackTrace(e);
             return false;
         }
-    }
-
-    private static void setMagicLevel(Player p, Integer magic) {
-        HeroesController.setMagicLevel(p, magic);
-    }
-
-    private static void setMagicLevelP(Player p, Integer magic) {
-        HeroesController.setMagicLevelP(p, magic);
     }
 
     private static void removePerms(ArenaPlayer p, List<String> perms) {
@@ -428,18 +388,6 @@ public class TransitionController {
             return classes.get(teamIndex);
         } else if (classes.containsKey(ArenaClass.DEFAULT)){
             return classes.get(ArenaClass.DEFAULT);
-        }
-        return null;
-    }
-
-    private static String getDisguise(StateOptions mo, final int teamIndex) {
-        Map<Integer,String> disguises = mo.getDisguises();
-        if (disguises==null)
-            return null;
-        if (disguises.containsKey(teamIndex)){
-            return disguises.get(teamIndex);
-        } else if (disguises.containsKey(DisguiseInterface.DEFAULT)){
-            return disguises.get(DisguiseInterface.DEFAULT);
         }
         return null;
     }

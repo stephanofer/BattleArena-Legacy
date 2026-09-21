@@ -23,8 +23,6 @@ public class AnnouncementOptions {
 			} catch (Exception e){/* do nothing*/}
 			if (ao != null)
 				return ao;
-			if (str.contains("HC") || str.contains("HEROCHAT"))
-				return AnnouncementOption.CHANNEL;
 			return null;
 		}
 	}
@@ -106,14 +104,14 @@ public class AnnouncementOptions {
 
 		/// Channel option enabled
 		if (ops.containsKey(AnnouncementOption.CHANNEL)){
-			String hcChannelName = (String) ops.get(AnnouncementOption.CHANNEL);
+			String channelName = (String) ops.get(AnnouncementOption.CHANNEL);
 			if (chatPlugin == null){
-				Log.warn(BattleArena.getPluginName()+" channel plugin is not enabled, ignoring config.yml announcement option channel="+hcChannelName);
+				Log.warn(BattleArena.getPluginName()+" channel plugin is not enabled, ignoring config.yml announcement option channel="+channelName);
 				return Channels.ServerChannel;
 			}
-			Channel channel = chatPlugin.getChannel(hcChannelName);
+			Channel channel = chatPlugin.getChannel(channelName);
 			if (channel == null){
-				Log.warn(BattleArena.getPluginName()+" channel not found!. ignoring config.yml announcement option channel="+hcChannelName);
+				Log.warn(BattleArena.getPluginName()+" channel not found!. ignoring config.yml announcement option channel="+channelName);
 				return Channels.ServerChannel;
 			} else {
 				return channel;
