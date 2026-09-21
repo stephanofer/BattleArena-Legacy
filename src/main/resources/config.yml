@@ -3,20 +3,6 @@ configVersion: 2.4.0
 # For help the docs are a good source of information
 # Wiki: # https://docs.battleplugins.org/docs/ba/
 
-# Updates will be retrieved from the latest plugin on GitHub. Valid Options : none, release, beta, all
-# none (don't auto update)
-# release (only get release version, ignore beta and alpha)
-# beta (get release and beta versions, ignore alpha)
-# all (get all new updates)
-autoUpdate: release
-
-# show newer versions. Valid Options: none, console, ops
-# none (don't show new versions)
-# console (show only to console log on startup)
-# ops (announce to ops on join, will only show this message once per server start)
-announceUpdate: console
-
-
 ## What is the money on this server called, or if you use Vault the money name will come from there
 moneyName: Gold
 

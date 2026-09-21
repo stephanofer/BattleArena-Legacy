@@ -23,7 +23,6 @@ public enum AlterParamOption {
     DISPLAYNAME("displayName",true, false),
     DATABASE("db",true, false),
     RATED("rated",true, false),
-    USETRACKERMESSAGES("useTrackerMessages",true, false),
     GIVEITEMS("giveItems",true, false),
     NEEDITEMS("needItems",true, false),
     TAKEITEMS("takeItems",true, false),
@@ -108,7 +107,6 @@ public enum AlterParamOption {
             case CANCELIFNOTENOUGHPLAYERS:
             case CLOSEWAITROOMWHILERUNNING:
             case RATED:
-            case USETRACKERMESSAGES:
                 return Boolean.valueOf(value);
             default:
                 break;

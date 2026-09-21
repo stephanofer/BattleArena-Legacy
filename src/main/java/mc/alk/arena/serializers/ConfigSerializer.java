@@ -19,7 +19,6 @@ import mc.alk.arena.controllers.Modules;
 import mc.alk.arena.controllers.OptionSetController;
 import mc.alk.arena.controllers.ParamController;
 import mc.alk.arena.controllers.StateController;
-import mc.alk.arena.controllers.plugins.TrackerController;
 import mc.alk.arena.objects.ArenaClass;
 import mc.alk.arena.objects.ArenaParams;
 import mc.alk.arena.objects.ArenaSize;
@@ -43,11 +42,10 @@ import mc.alk.arena.objects.options.StateOptions;
 import mc.alk.arena.objects.options.TransitionOption;
 import mc.alk.arena.objects.victoryconditions.OneTeamLeft;
 import mc.alk.arena.objects.victoryconditions.VictoryType;
-import mc.alk.arena.util.BTInterface;
 import mc.alk.arena.util.Log;
 import mc.alk.arena.util.MinMax;
 import mc.alk.arena.util.SerializerUtil;
-import mc.alk.battlebukkitlib.InventoryUtil;
+import mc.alk.arena.util.InventoryUtil;
 import mc.alk.battlebukkitlib.EffectUtil;
 
 import org.apache.commons.lang.StringUtils;
@@ -338,32 +336,11 @@ public class ConfigSerializer extends BaseConfig{
         if (cs.contains("tracking")){
             cs = cs.getConfigurationSection("tracking");}
 
-        /// TeamJoinResult in tracking for this match type
         String dbName = (cs.contains("database")) ? cs.getString("database",null) : cs.getString("db",null);
         if (dbName == null) dbName = cs.getString("dbTableName", null);
         if (dbName != null){
             mp.setTableName(dbName);
-            if (TrackerController.enabled()){
-                try{
-                    if (!BTInterface.addBTI(mp)){
-                        Log.err("Couldn't add tracker interface");}
-                } catch (Exception e){
-                    Log.err("Couldn't add tracker interface");
-                }
-            }
         }
-        if (cs.contains("overrideBattleTracker")){
-            mp.setUseTrackerPvP(cs.getBoolean("overrideBattleTracker", true));
-        } else {
-            mp.setUseTrackerPvP(cs.getBoolean("useTrackerPvP", false));
-        }
-        if (!isNonBaseConfig || cs.contains("useTrackerMessages"))
-            mp.setUseTrackerMessages(cs.getBoolean("useTrackerMessages", false));
-        if (cs.contains("teamRating")){
-            mp.setTeamRating(cs.getBoolean("teamRating",false));}
-        //		mp.set
-        //		mp.setOverrideBTMessages(cs.getBoolean(path))
-        /// What is the default rating for this match type
         if (cs.contains("rated"))
             mp.setRated(cs.getBoolean("rated", true));
     }
@@ -493,6 +470,9 @@ public class ConfigSerializer extends BaseConfig{
                 Object ovalue;
                 try{
                     to = TransitionOption.fromString(key);
+                    if (to == null) {
+                        continue; /// Silently ignore removed/obsolete options
+                    }
                     if (to == TransitionOption.ENCHANTS) /// we deal with these later
                         continue;
                     if (to.hasValue() && value == null){
@@ -729,12 +709,10 @@ public class ConfigSerializer extends BaseConfig{
             if (params.getTimeBetweenRounds() != null) cs.set("timeBetweenRounds", params.getTimeBetweenRounds());
             if (params.getIntervalTime() != null) cs.set("matchUpdateInterval", params.getIntervalTime());
         }
-        if (params.isRated() != null ||
-                params.getDBTableName() != null || params.getUseTrackerMessages() != null) {
+        if (params.isRated() != null || params.getDBTableName() != null) {
             ConfigurationSection cs = maincs.createSection("tracking");
             if (params.getDBTableName() != null) cs.set("dbTableName", params.getDBTableName());
             if (params.isRated() != null) cs.set("rated", params.isRated());
-            if (params.getUseTrackerMessages() != null) cs.set("useTrackerMessages", params.getUseTrackerMessages());
         }
 
         if (!isNonBaseConfig && params.getType() != null){

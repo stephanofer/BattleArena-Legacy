@@ -7,8 +7,8 @@ configVersion: 2.0
 <name>:
     enabled: true
     joinType: Queue
-    database: <name> # or delete if you dont want wins/losses/top, needs BattleTracker
-    rated: true # if database is enabled
+    database: <name> # database table for this competition
+    rated: true
     prefix: "&6[<name>]&e"
     command: <cmd>
     victoryCondition: LastManStanding

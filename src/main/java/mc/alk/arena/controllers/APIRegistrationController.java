@@ -30,8 +30,6 @@ import mc.alk.arena.serializers.ConfigSerializer;
 import mc.alk.arena.serializers.MessageSerializer;
 import mc.alk.arena.util.FileUtil;
 import mc.alk.arena.util.Log;
-import mc.alk.battlepluginupdater.FileUpdater;
-import mc.alk.battlepluginupdater.PluginUpdater;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -160,7 +158,7 @@ public class APIRegistrationController {
             throws Exception {
         /// Create our plugin folder if its not there
         File dir = plugin.getDataFolder();
-        FileUpdater.makeIfNotExists(dir);
+        FileUtil.makeIfNotExists(dir);
 
         /// Define our config files
         String configFileName = name + "Config.yml";
@@ -291,18 +289,12 @@ public class APIRegistrationController {
     }
 
     /**
-     * @deprecated can cause problems with "empty" jars, use {@link mc.alk.battlepluginupdater.SpigotUpdater}
+     * @deprecated BattlePluginUpdater has been removed.
      */
     @Deprecated
     public void update(Plugin plugin, int bukkitId, File file,
             UpdateOption updateOption, AnnounceUpdateOption announceOption) {
-        if (updateOption == null) {
-            updateOption = UpdateOption.NONE;
-        }
-        if (announceOption == null) {
-            announceOption = AnnounceUpdateOption.NONE;
-        }
-        PluginUpdater.update(plugin, bukkitId, file, updateOption.toPluginUpdater(), announceOption.toPluginUpdater());
+        /* no-op: BattlePluginUpdater removed */
     }
 
     class ArenaBukkitCommand extends Command implements PluginIdentifiableCommand {

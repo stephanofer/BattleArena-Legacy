@@ -37,8 +37,6 @@ import mc.alk.arena.util.FileUtil;
 import mc.alk.arena.util.KeyValue;
 import mc.alk.arena.util.Log;
 import mc.alk.arena.util.MinMax;
-import mc.alk.battlepluginupdater.PluginUpdater.AnnounceUpdateOption;
-import mc.alk.battlepluginupdater.PluginUpdater.UpdateOption;
 import mc.euro.bukkitadapter.MaterialAdapter;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.GameMode;
@@ -66,10 +64,6 @@ public class BAConfigSerializer extends BaseConfig {
         if (!Defaults.MONEY_SET) {
             Defaults.MONEY_STR = config.getString("moneyName", Defaults.MONEY_STR);
         }
-        UpdateOption o = UpdateOption.fromString(config.getString("autoUpdate", "none"));
-        Defaults.AUTO_UPDATE = o != null ? o : UpdateOption.NONE;
-        AnnounceUpdateOption ao = AnnounceUpdateOption.fromString(config.getString("announceUpdate", "none"));
-        Defaults.ANNOUNCE_UPDATE = ao != null ? ao : AnnounceUpdateOption.NONE;
         Defaults.TELEPORT_Y_OFFSET = config.getDouble("teleportYOffset", Defaults.TELEPORT_Y_OFFSET);
         Defaults.TELEPORT_Y_VELOCITY = config.getDouble("teleportYVelocity", Defaults.TELEPORT_Y_VELOCITY);
         Defaults.NUM_INV_SAVES = config.getInt("numberSavedInventories", Defaults.NUM_INV_SAVES);
@@ -229,9 +223,6 @@ public class BAConfigSerializer extends BaseConfig {
         defaults.setWaitroomClosedWhileRunning(true);
         defaults.setCancelIfNotEnoughPlayers(false);
         defaults.setRated(true);
-        defaults.setUseTrackerPvP(false);
-        defaults.setTeamRating(false);
-        defaults.setUseTrackerMessages(true);
         defaults.setNLives(1);
         defaults.setTeamSize(new MinMax(1, ArenaSize.MAX));
         defaults.setNTeams(new MinMax(2, ArenaSize.MAX));

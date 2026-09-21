@@ -4,7 +4,7 @@ plugins {
 }
 
 group = "mc.alk"
-version = "4.0.0"
+version = "4.0.1"
 
 java {
     sourceCompatibility = JavaVersion.VERSION_1_8
@@ -34,7 +34,6 @@ dependencies {
         isTransitive = false
     }
     compileOnly("me.clip:placeholderapi:2.12.3")
-    compileOnly("mc.alk:BattleTracker:2.5.11.0")
     compileOnly("mc.alk:VirtualPlayers:1.10.0")
     compileOnly(files("libs/WorldEdit.jar"))
     compileOnly(files("libs/EssentialsX-2.20.1.jar"))
@@ -43,7 +42,6 @@ dependencies {
     implementation("mc.euro:BukkitAdapter:1.2.8")
     implementation("mc.euro:BukkitInterface:4.0.1")
     implementation("mc.alk:BattleBukkitLib:4.5.2")
-    implementation("mc.alk:BattlePluginUpdater:2.2.0")
     implementation("mc.alk:BattleScoreboardAPI:2.0")
     implementation("mc.alk:BattleWebAPI:2.0")
     implementation("org.battleplugins.arenaregenutil:ArenaRegenUtil:1.2.0")
@@ -91,7 +89,6 @@ tasks.shadowJar {
     relocate("mc.euro.bukkitadapter", "mc.alk.arena.alib.bukkitadapter")
     relocate("mc.euro.bukkitinterface", "mc.alk.arena.alib.bukkitinterface")
     relocate("mc.alk.battlebukkitlib", "mc.alk.arena.alib.battlebukkitlib")
-    relocate("mc.alk.battlepluginupdater", "mc.alk.arena.alib.battlepluginupdater")
     relocate("mc.alk.battlescoreboardapi", "mc.alk.arena.alib.battlescoreboardapi")
     relocate("mc.alk.battlewebapi", "mc.alk.arena.alib.battlewebsapi")
     relocate("org.battleplugins.arenaregenutil", "mc.alk.arena.alib.arenaregenutil")

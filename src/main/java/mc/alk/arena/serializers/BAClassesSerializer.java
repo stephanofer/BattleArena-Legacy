@@ -9,7 +9,7 @@ import mc.alk.arena.objects.CommandLineString;
 import mc.alk.arena.objects.exceptions.InvalidOptionException;
 import mc.alk.arena.objects.spawns.SpawnInstance;
 import mc.alk.arena.util.Log;
-import mc.alk.battlebukkitlib.InventoryUtil;
+import mc.alk.arena.util.InventoryUtil;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;

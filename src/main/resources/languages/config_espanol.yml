@@ -4,9 +4,6 @@ configVersion: 2.2
 # Wiki: # https://docs.battleplugins.org/docs/ba/
 # Traducido por geor196
 
-# Las actualizaciones seran tomadas automaticamente del sitio Bukkit
-autoUpdate: true
-
 ## Como se llama el dinero en el server, si usas Vault el nombre vendra de aqui
 moneyName: Oro
 

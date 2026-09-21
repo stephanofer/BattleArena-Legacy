@@ -30,7 +30,7 @@ import mc.alk.arena.objects.spawns.TimedSpawn;
 import mc.alk.arena.util.Log;
 import mc.alk.arena.util.MinMax;
 import mc.alk.arena.util.SerializerUtil;
-import mc.alk.battlebukkitlib.InventoryUtil;
+import mc.alk.arena.util.InventoryUtil;
 import mc.euro.bukkitadapter.MaterialAdapter;
 import org.apache.commons.lang.StringUtils;
 import org.battleplugins.worldguardutil.controllers.WorldGuardController;

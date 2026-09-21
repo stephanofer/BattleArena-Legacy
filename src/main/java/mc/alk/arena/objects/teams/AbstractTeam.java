@@ -1,7 +1,7 @@
 package mc.alk.arena.objects.teams;
 
 import mc.alk.arena.Defaults;
-import mc.alk.arena.controllers.plugins.TrackerController;
+import mc.alk.arena.objects.stats.BlankArenaStat;
 import mc.alk.arena.objects.ArenaPlayer;
 import mc.alk.arena.objects.MatchParams;
 import mc.alk.arena.objects.scoreboard.ArenaObjective;
@@ -521,14 +521,12 @@ abstract class AbstractTeam implements ArenaTeam{
 
 	@Override
 	public ArenaStat getStat(){
-		return TrackerController.loadRecord(getCurrentParams(), this);
-//		return stat;
+		return BlankArenaStat.BLANK_STAT;
 	}
 
 	@Override
 	public ArenaStat getStat(MatchParams params){
-		return TrackerController.loadRecord(params, this);
-//		return stat;
+		return BlankArenaStat.BLANK_STAT;
 	}
 
     @Override

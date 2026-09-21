@@ -1,6 +1,5 @@
 package mc.alk.arena.controllers.messaging;
 
-import mc.alk.arena.controllers.plugins.TrackerController;
 import mc.alk.arena.objects.ArenaPlayer;
 import mc.alk.arena.objects.MatchParams;
 import mc.alk.arena.objects.messaging.Message;
@@ -28,7 +27,6 @@ public class MessageFormatter{
 	final DecimalFormat decFormat = new DecimalFormat("#0.##");
 	final String[] searchList;
 	final String[] replaceList;
-	final TrackerController sc;
 
 	final Set<MessageOption> ops;
 	final Message msg;
@@ -47,7 +45,6 @@ public class MessageFormatter{
 		tns = new HashMap<Integer,TeamNames>(nTeams);
 		this.mp = mp;
 		typeName = mp.getType().getName();
-		sc = new TrackerController(mp);
 		this.impl = impl;
 	}
 

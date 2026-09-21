@@ -218,7 +218,9 @@ public class InventoryUtil {
 		if (mat != null && mat != Material.AIR) {
 			return new ItemStack(mat, 1, dataValue);
 		} else {
-			if (itemStr.equalsIgnoreCase("steak")){
+			if (itemStr.equalsIgnoreCase("splash_potion")){
+				return new ItemStack(Material.POTION, 1, (short) 16384);
+			} else if (itemStr.equalsIgnoreCase("steak")){
 				return new ItemStack(Material.COOKED_BEEF, 1);
 			} else if (itemStr.equalsIgnoreCase("chicken")){
 				return new ItemStack(Material.COOKED_CHICKEN, 1);
@@ -621,6 +623,9 @@ public class InventoryUtil {
 			Pattern.compile("effects= ?\"([^\"]*)\"",Pattern.CASE_INSENSITIVE); //The pattern for matching potion effects
 
 	public static ItemStack parseItem(String str) throws Exception{
+		if (str.contains("splash_potion")) {
+			str = str.replace("splash_potion", "potion:16384");
+		}
 		/// items in yaml get stored like this {leather_chest=fireprot:5 1}
 		/// so need to remove the {} and the first '='
 		if (str.contains("{"))
@@ -1145,6 +1150,9 @@ public class InventoryUtil {
 			for (Object o : cs.getList(nodeString)){
 				try {
 					str = o.toString();
+					if (str.contains("splash_potion")) {
+						str = str.replace("splash_potion", "potion:16384");
+					}
 					ItemStack is = InventoryUtil.parseItem(str);
 					if (is != null){
 						items.add(is);

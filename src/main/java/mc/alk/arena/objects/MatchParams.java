@@ -27,9 +27,6 @@ public class MatchParams extends ArenaParams implements Comparable<MatchParams>{
 
     Integer numConcurrentCompetitions;
     Set<ArenaModule> modules;
-    Boolean useBTPvP;
-    Boolean useBTMessages;
-    Boolean useBTTeamRating;
 
     MatchParams mparent;
 
@@ -60,9 +57,6 @@ public class MatchParams extends ArenaParams implements Comparable<MatchParams>{
             this.ao = mp.ao;
             this.numConcurrentCompetitions = mp.numConcurrentCompetitions;
             this.mparent = mp.mparent;
-            this.useBTMessages = mp.useBTMessages;
-            this.useBTPvP = mp.useBTPvP;
-            this.useBTTeamRating  = mp.useBTTeamRating;
             this.signDisplayName = mp.signDisplayName;
             if (mp.modules != null)
                 this.modules = new HashSet<ArenaModule>(mp.modules);
@@ -77,9 +71,6 @@ public class MatchParams extends ArenaParams implements Comparable<MatchParams>{
             if (this.intervalTime == null) this.intervalTime = mparent.getIntervalTime();
             if (this.ao == null) this.ao = mparent.getAnnouncementOptions();
             if (this.numConcurrentCompetitions == null) this.numConcurrentCompetitions = mparent.getNConcurrentCompetitions();
-            if (this.useBTMessages == null) this.useBTMessages = mparent.getUseTrackerMessages();
-            if (this.useBTPvP == null) this.useBTPvP = mparent.getUseTrackerPvP();
-            if (this.useBTTeamRating == null) this.useBTTeamRating = mparent.isTeamRating();
             if (this.signDisplayName== null) this.signDisplayName = mparent.getSignDisplayName();
             this.modules = getModules();
             this.mparent = null;
@@ -185,24 +176,6 @@ public class MatchParams extends ArenaParams implements Comparable<MatchParams>{
         return ms;
     }
 
-    public void setUseTrackerPvP(Boolean enable) {
-        useBTPvP = enable;
-    }
-
-    public Boolean getUseTrackerPvP() {
-        return useBTPvP != null ? useBTPvP : (mparent!= null ? mparent.getUseTrackerPvP() : null);
-    }
-
-
-    public Boolean getUseTrackerMessages() {
-        return useBTMessages != null ? useBTMessages : (mparent!= null ? mparent.getUseTrackerMessages() : null);
-    }
-
-    public void setUseTrackerMessages(Boolean enable) {
-        useBTMessages = enable;
-    }
-
-
     @Override
     public boolean valid() {
         return super.valid() && (!getStateGraph().hasAnyOption(TransitionOption.TELEPORTLOBBY) ||
@@ -227,13 +200,5 @@ public class MatchParams extends ArenaParams implements Comparable<MatchParams>{
 
     public GameManager getGameManager() {
         return GameManager.getGameManager(this);
-    }
-
-    public void setTeamRating(Boolean b) {
-        this.useBTTeamRating = b;
-    }
-
-    public Boolean isTeamRating(){
-        return useBTTeamRating != null ? useBTTeamRating : (mparent!= null ? mparent.isTeamRating() : null);
     }
 }

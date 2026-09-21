@@ -92,4 +92,11 @@ public class FileUtil {
 		}
 		return file;
 	}
+
+	public static boolean makeIfNotExists(File file) {
+		if (file == null || file.exists()) {
+			return true;
+		}
+		return file.mkdirs();
+	}
 }

@@ -1,7 +1,6 @@
 package mc.alk.arena.objects.victoryconditions;
 
 import mc.alk.arena.competition.match.Match;
-import mc.alk.arena.controllers.plugins.TrackerController;
 import mc.alk.arena.events.matches.MatchFindCurrentLeaderEvent;
 import mc.alk.arena.events.players.ArenaPlayerKillEvent;
 import mc.alk.arena.objects.WinLossDraw;
@@ -22,7 +21,6 @@ import mc.alk.battlescoreboardapi.scoreboard.SAPIDisplaySlot;
 public class AllKills extends VictoryCondition implements ScoreTracker {
 
     final ArenaObjective kills;
-    final TrackerController sc;
     final ConfigurationSection section;
 
     public AllKills(Match match, ConfigurationSection section) {
@@ -32,9 +30,6 @@ public class AllKills extends VictoryCondition implements ScoreTracker {
         String criteria = section.getString("criteria", "Kill Mobs/players");
         kills = new ArenaObjective(getClass().getSimpleName(), displayName, criteria,
                 SAPIDisplaySlot.SIDEBAR, 60);
-        boolean isRated = match.getParams().isRated();
-        boolean soloRating = !match.getParams().isTeamRating();
-        sc = (isRated && soloRating) ? new TrackerController(match.getParams()) : null;
     }
 
     @ArenaEventHandler(priority = EventPriority.LOW)
@@ -42,9 +37,6 @@ public class AllKills extends VictoryCondition implements ScoreTracker {
         int points = section.getInt("points.player", 1);
         kills.addPoints(event.getPlayer(), points);
         kills.addPoints(event.getTeam(), points);
-        if (sc != null) {
-            sc.addRecord(event.getPlayer(), event.getTarget(), WinLossDraw.WIN);
-        }
     }
 
     @ArenaEventHandler(priority = EventPriority.LOW)

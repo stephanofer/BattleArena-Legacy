@@ -9,7 +9,6 @@ import mc.alk.arena.controllers.BattleArenaController;
 import mc.alk.arena.controllers.ParamController;
 import mc.alk.arena.controllers.Scheduler;
 import mc.alk.arena.controllers.joining.TeamJoinFactory;
-import mc.alk.arena.controllers.plugins.TrackerController;
 import mc.alk.arena.events.events.tournaments.TournamentRoundEvent;
 import mc.alk.arena.events.matches.MatchCancelledEvent;
 import mc.alk.arena.events.matches.MatchCompletedEvent;
@@ -31,7 +30,6 @@ import mc.alk.arena.objects.options.EventOpenOptions;
 import mc.alk.arena.objects.options.JoinOptions;
 import mc.alk.arena.objects.options.StateOptions;
 import mc.alk.arena.objects.spawns.SpawnLocation;
-import mc.alk.arena.objects.stats.ArenaStat;
 import mc.alk.arena.objects.teams.ArenaTeam;
 import mc.alk.arena.util.Log;
 import mc.alk.arena.util.MessageUtil;
@@ -127,24 +125,15 @@ public class TournamentEvent extends Event implements Listener, ArenaListener {
         server.broadcastMessage(Log.colorChat(eventParams.getPrefix()+"&e The " + singleGameParms.getName() +
                 " is starting!"));
 
-        TreeMap<Double,ArenaTeam> sortTeams = new TreeMap<Double,ArenaTeam>(Collections.reverseOrder());
-        TrackerController sc = new TrackerController(eventParams);
-
+        List<ArenaTeam> validTeams = new ArrayList<ArenaTeam>();
         for (ArenaTeam t: teams) {
-            if (t.size() <= 0) {
-                continue;
+            if (t.size() > 0) {
+                validTeams.add(t);
             }
-            ArenaStat stat = sc.loadRecord(t);
-            Double elo = (double) stat.getRating();
-            while (sortTeams.containsKey(elo)) {
-                elo += 0.0001;
-            }
-            sortTeams.put(elo, t);
         }
         teams.clear();
         aliveTeams.clear();
-        ArrayList<ArenaTeam> ts = new ArrayList<ArenaTeam>(sortTeams.values());
-        for (ArenaTeam t: ts){
+        for (ArenaTeam t: validTeams){
             teams.add(t);
             aliveTeams.add(t);
             competingTeams.add(t);
@@ -408,14 +397,12 @@ public class TournamentEvent extends Event implements Listener, ArenaListener {
                 t.sendMessage("&4["+strround+"]&e You have a &5bye&e this round");
             }
         }
-        TrackerController sc = new TrackerController(eventParams);
         final String prefix = eventParams.getPrefix();
         if (tr.getMatchups().size() <= 8){
             for (Matchup m: tr.getMatchups()){
                 List<String> names = new ArrayList<String>();
                 for (ArenaTeam t: m.getTeams()){
-                    ArenaStat st = sc.loadRecord(t);
-                    names.add("&8"+t.getDisplayName()+"&6["+st.getRating()+"]");
+                    names.add("&8"+t.getDisplayName());
                 }
                 String msg = "&e"+ strround +": " + StringUtils.join(names, " vs ");
                 if (ChatPaginator.GUARANTEED_NO_WRAP_CHAT_PAGE_WIDTH > msg.length() + prefix.length()){

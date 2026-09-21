@@ -133,9 +133,6 @@ public class ParamAlterController {
             case VICTORYCONDITION:
                 params.setVictoryCondition((VictoryType)value);
                 break;
-            case USETRACKERMESSAGES:
-                params.setUseTrackerMessages((Boolean)value);
-                break;
             case RATED:
                 params.setRated((Boolean)value);
                 break;
@@ -295,6 +292,7 @@ public class ParamAlterController {
 
     private boolean deleteTransitionOption(CompetitionState state, String key) throws Exception{
         TransitionOption to = TransitionOption.fromString(key);
+        if (to == null) return false;
         StateGraph tops = params.getThisStateGraph();
         return tops.removeStateOption(state, to);
     }

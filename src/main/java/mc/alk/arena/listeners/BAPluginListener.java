@@ -4,7 +4,6 @@ import mc.alk.arena.BattleArena;
 import mc.alk.arena.Defaults;
 import mc.alk.arena.controllers.MoneyController;
 import mc.alk.arena.controllers.plugins.EssentialsController;
-import mc.alk.arena.controllers.plugins.TrackerController;
 import mc.alk.arena.objects.messaging.AnnouncementOptions;
 import mc.alk.arena.plugins.BAPlaceholderExtension;
 import mc.alk.arena.util.Log;
@@ -33,9 +32,7 @@ public class BAPluginListener implements Listener {
     @EventHandler
     public void onPluginEnable(PluginEnableEvent event) {
         String pluginName = event.getPlugin().getName();
-        if (pluginName.equalsIgnoreCase("BattleTracker")) {
-            loadBattleTracker();
-        } else if (pluginName.equalsIgnoreCase("Essentials")) {
+        if (pluginName.equalsIgnoreCase("Essentials")) {
             loadEssentials();
         } else if (pluginName.equalsIgnoreCase("MultiInv")) {
             loadMultiInv();
@@ -57,7 +54,6 @@ public class BAPluginListener implements Listener {
     }
 
     public void loadAll() {
-        loadBattleTracker();
         loadEssentials();
         loadMultiInv();
         loadMultiverseCore();
@@ -68,18 +64,6 @@ public class BAPluginListener implements Listener {
         loadVault();
         loadOthers();
     }
-
-    public void loadBattleTracker() {
-        if (!TrackerController.enabled()) {
-            Plugin plugin = Bukkit.getPluginManager().getPlugin("BattleTracker");
-            if (plugin != null) {
-                TrackerController.setPlugin(plugin);
-            } else {
-                Log.info("[BattleArena] BattleTracker not detected, not tracking wins");
-            }
-        }
-    }
-
 
     public void loadEssentials() {
         if (!EssentialsController.enabled()) {

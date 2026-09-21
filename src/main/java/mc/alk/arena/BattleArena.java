@@ -66,15 +66,11 @@ import mc.alk.arena.serializers.SignSerializer;
 import mc.alk.arena.serializers.SpawnSerializer;
 import mc.alk.arena.serializers.StateFlagSerializer;
 import mc.alk.arena.serializers.TeamHeadSerializer;
-import mc.alk.arena.serializers.YamlFileUpdater;
 import mc.alk.arena.util.FileLogger;
 import mc.alk.arena.util.FileUtil;
 import mc.alk.arena.util.Log;
 import mc.alk.arena.util.MessageUtil;
 import mc.alk.arena.util.PlayerUtil;
-import mc.alk.battlepluginupdater.FileUpdater;
-import mc.alk.battlepluginupdater.GitHubUpdater;
-import mc.alk.battlepluginupdater.PluginUpdater;
 import mc.alk.battlewebapi.BattlePluginsAPI;
 import mc.euro.bukkitinterface.BukkitInterface;
 import org.bukkit.Bukkit;
@@ -134,13 +130,13 @@ public class BattleArena extends JavaPlugin {
 
         /// Create our plugin folder if its not there
         final File dir = getDataFolder();
-        FileUpdater.makeIfNotExists(dir);
-        FileUpdater.makeIfNotExists(new File(dir + "/competitions"));
-        FileUpdater.makeIfNotExists(new File(dir + "/messages"));
-        FileUpdater.makeIfNotExists(new File(dir + "/saves"));
-        FileUpdater.makeIfNotExists(new File(dir + "/modules"));
-        FileUpdater.makeIfNotExists(new File(dir + "/otherPluginConfigs"));
-        FileUpdater.makeIfNotExists(new File(dir + "/victoryConditions"));
+        FileUtil.makeIfNotExists(dir);
+        FileUtil.makeIfNotExists(new File(dir + "/competitions"));
+        FileUtil.makeIfNotExists(new File(dir + "/messages"));
+        FileUtil.makeIfNotExists(new File(dir + "/saves"));
+        FileUtil.makeIfNotExists(new File(dir + "/modules"));
+        FileUtil.makeIfNotExists(new File(dir + "/otherPluginConfigs"));
+        FileUtil.makeIfNotExists(new File(dir + "/victoryConditions"));
 
         for (String c : new String[]{"WorldGuardConfig"}){
             try{
@@ -164,13 +160,9 @@ public class BattleArena extends JavaPlugin {
             }
         }
         
-        /// For potential updates to default yml files
-        YamlFileUpdater yfu = new YamlFileUpdater(this);
-
         /// Set up our messages first before other initialization needs messages
         MessageSerializer defaultMessages = new MessageSerializer("default", null);
         defaultMessages.setConfig(FileUtil.load(clazz, dir.getPath() + "/messages.yml", "/default_files/messages.yml"));
-        yfu.updateMessageSerializer(plugin, defaultMessages); /// Update our config if necessary
         defaultMessages.loadAll();
         MessageSerializer.setDefaultConfig(defaultMessages);
 
@@ -208,12 +200,6 @@ public class BattleArena extends JavaPlugin {
 
         /// Load our configs, then arenas
         baConfigSerializer.setConfig(FileUtil.load(clazz, dir.getPath() + "/config.yml", "/config.yml"));
-        try {
-            YamlFileUpdater.updateBaseConfig(this, baConfigSerializer); /// Update our config if necessary
-        } catch (Exception e) {
-            Log.printStackTrace(e);
-        }
-
         baConfigSerializer.loadDefaults(); /// Load our defaults for BattleArena, has to happen before classes are loaded
 
         baSignSerializer.setConfig(FileUtil.load(clazz, dir.getPath() + "/signs.yml", "/default_files/signs.yml"));
@@ -281,16 +267,6 @@ public class BattleArena extends JavaPlugin {
             }
         });
         bpapi = new BattlePluginsAPI();
-        //PluginUpdater.update(this, bukkitId, this.getFile(),
-        //        Defaults.AUTO_UPDATE, Defaults.ANNOUNCE_UPDATE);
-
-        //String githubLink = "https://github.com/BattlePlugins/" + pluginname + "/releases/download/%s/" + pluginname + ".jar";
-        //SpigotUpdater updater = new SpigotUpdater(this, spigotId, githubLink);
-        //updater.update();
-
-        GitHubUpdater updater = new GitHubUpdater(this, "BattlePlugins", pluginname);
-        updater.update();
-
         Log.info("&4[" + pluginname + "] &6v" + BattleArena.version + "&f enabled!");
     }
 
@@ -314,22 +290,12 @@ public class BattleArena extends JavaPlugin {
     }
 
     /**
-     * Check for updates for a given plugin.
-     * If there are updates then it will announce the newer version to the console. It will download the newer
-     * jar if the "update" variable is true.
-     * This happens in an asynchronous manner to not lag the server while checking for the update
-     * @param plugin BattleArena extension plugin
-     * @param bukkitId the bukkit id of this plugin
-     * @param file File from the bukkit plugin, use this.getFile()
-     * @param updateOption whether we should update the plugin or simply announce that there is a newer version
-     * @param announceOption whether we should update the plugin or simply announce that there is a newer version
-     *
-     * @deprecated can cause problems with "empty" jars, use {@link mc.alk.battlepluginupdater.SpigotUpdater}
+     * @deprecated BattlePluginUpdater has been removed.
      */
     @Deprecated
     public static void update(final Plugin plugin, final int bukkitId, final File file,
                               final UpdateOption updateOption, final AnnounceUpdateOption announceOption) {
-        new APIRegistrationController().update(plugin, bukkitId, file, updateOption, announceOption);
+        /* no-op: BattlePluginUpdater removed */
     }
 
     /**
@@ -368,9 +334,6 @@ public class BattleArena extends JavaPlugin {
                 return null;
             }
         }
-        public PluginUpdater.UpdateOption toPluginUpdater() {
-            return PluginUpdater.UpdateOption.fromString(this.name());
-        }
     }
 
     /**
@@ -388,9 +351,6 @@ public class BattleArena extends JavaPlugin {
             } catch(Exception e) {
                 return null;
             }
-        }
-        public PluginUpdater.AnnounceUpdateOption toPluginUpdater() {
-            return PluginUpdater.AnnounceUpdateOption.fromString(this.name());
         }
     }
 

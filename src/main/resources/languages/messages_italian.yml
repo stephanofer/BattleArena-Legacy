@@ -56,8 +56,8 @@ system:
 
 common:
     team: '&7{name}&e'
-    teamshort: '&7{name}&e[{ranking}]'  ## only used with BattleTracker
-    teamlong: '&7{name}&e[{ranking}] &6({wins}:{losses})'  ## only used with BattleTracker
+    teamshort: '&7{name}&e'
+    teamlong: '&7{name}&e'
     other_team_not_ready: '&eGli altri &cteams&e non sono ancora pronti!'
     your_team_not_ready: '&eIl tuo team non è pronto per entrare'
     added_to_team: '&6{playername} &eè entrato nel team'

@@ -158,7 +158,19 @@ public enum TransitionOption implements StateOption {
     @Override
     public boolean hasValue(){return hasValue;}
 
+    public static boolean isObsolete(String str) {
+        if (str == null) return false;
+        str = str.toUpperCase();
+        return str.equals("STOREHEROCLASS") || str.equals("RESTOREHEROCLASS")
+                || str.equals("STOREMAGIC") || str.equals("RESTOREMAGIC")
+                || str.equals("MAGIC") || str.equals("MAGICP")
+                || str.equals("HEROCLASS")
+                || str.equals("GIVEDISGUISE") || str.equals("DISGUISEALLAS")
+                || str.equals("DISGUISEALL") || str.equals("UNDISGUISE");
+    }
+
     public static TransitionOption fromString(String str){
+        if (str == null) return null;
         str = str.toUpperCase();
         try {
             return TransitionOption.valueOf(str);
@@ -177,6 +189,8 @@ public enum TransitionOption implements StateOption {
                 return TransitionOption.STOREENCHANTS;
             else if (str.equals("RESTOREPOTIONEFFECTS"))
                 return TransitionOption.RESTOREENCHANTS;
+            else if (isObsolete(str))
+                return null;
             throw new IllegalArgumentException("The stage option " + str +" does not exist");
         }
     }
