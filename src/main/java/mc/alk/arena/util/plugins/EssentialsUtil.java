@@ -36,20 +36,20 @@ public class EssentialsUtil {
 
 	public static void setFlight(String playerName, boolean enable) {
 		User user = getUser(playerName);
-		if (user != null && user.isFlying() != enable){
-			user.setFlying(enable);}
+		if (user != null && user.getBase() != null && user.getBase().isFlying() != enable){
+			user.getBase().setFlying(enable);}
 	}
 
 	public static void setFlightSpeed(String playerName, Float flightSpeed) {
 		User user = getUser(playerName);
-		if (user != null){
-			user.setFlySpeed(flightSpeed);}
+		if (user != null && user.getBase() != null && flightSpeed != null){
+			user.getBase().setFlySpeed(flightSpeed);}
 	}
 
 	public static boolean inJail(String playerName) {
 		try{
 			User user = getUser(playerName);
-			return user.getJailTimeout() > System.currentTimeMillis();
+			return user != null && (user.isJailed() || user.getJailTimeout() > System.currentTimeMillis());
 		} catch(Exception e){
 			Log.printStackTrace(e);
 			return false;
@@ -59,7 +59,7 @@ public class EssentialsUtil {
 	public static Boolean isGod(String playerName) {
 		try{
 			User user = getUser(playerName);
-			return user.isGodModeEnabled();
+			return user != null && user.isGodModeEnabled();
 		} catch(Exception e){
 			Log.printStackTrace(e);
 			return false;
@@ -69,7 +69,7 @@ public class EssentialsUtil {
 	public static Boolean isFlying(String playerName) {
 		try{
 			User user = getUser(playerName);
-			return user.isFlying();
+			return user != null && user.getBase() != null && user.getBase().isFlying();
 		} catch(Exception e){
 			Log.printStackTrace(e);
 			return false;

@@ -14,11 +14,12 @@ public class BAEvent extends Event {
 
     private static final HandlerList handlers = new HandlerList();
 
-    public void callEvent(){
+    @Override
+    public boolean callEvent() {
         if (Defaults.TESTSERVER)
-            return;
+            return false;
 
-        Bukkit.getServer().getPluginManager().callEvent(this);
+        return super.callEvent();
     }
 
     @Override
