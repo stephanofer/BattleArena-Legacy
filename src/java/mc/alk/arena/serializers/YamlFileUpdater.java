@@ -230,7 +230,7 @@ public class YamlFileUpdater {
         fu.replace("configVersion:.*", "configVersion: "+newVersion);
         fu.addAfter(".*defaultOptions.*",
                 "    useScoreboard: true ### Use the scoreboard",
-                "    useColoredNames: true  ## color team names (needs TagAPI or Scoreboard)","");
+                "    useColoredNames: true  ## color team names (needs Scoreboard)","");
         return fu.update();
     }
 

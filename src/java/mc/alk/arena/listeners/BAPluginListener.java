@@ -4,15 +4,10 @@ import mc.alk.arena.BattleArena;
 import mc.alk.arena.Defaults;
 import mc.alk.arena.controllers.MoneyController;
 import mc.alk.arena.controllers.plugins.EssentialsController;
-import mc.alk.arena.controllers.plugins.TagAPIController;
 import mc.alk.arena.controllers.plugins.TrackerController;
-import mc.alk.arena.objects.messaging.AnnouncementOptions;
 import mc.alk.arena.plugins.BAPlaceholderExtension;
-import mc.alk.arena.plugins.combattag.TagsOff;
-import mc.alk.arena.plugins.combattag.TagsOn;
 import mc.alk.arena.util.Log;
 import mc.alk.arena.util.PermissionsUtil;
-import mc.alk.arena.util.plugins.CombatTagUtil;
 
 import net.milkbowl.vault.chat.Chat;
 import net.milkbowl.vault.economy.Economy;
@@ -39,8 +34,6 @@ public class BAPluginListener implements Listener {
         String pluginName = event.getPlugin().getName();
         if (pluginName.equalsIgnoreCase("BattleTracker")) {
             loadBattleTracker();
-        } else if (pluginName.equalsIgnoreCase("CombatTag")) {
-            loadCombatTag();
         } else if (pluginName.equalsIgnoreCase("Essentials")) {
             loadEssentials();
         } else if (pluginName.equalsIgnoreCase("MultiInv")) {
@@ -51,8 +44,6 @@ public class BAPluginListener implements Listener {
             loadMultiverseInventory();
         } else if (pluginName.equalsIgnoreCase("PlaceholderAPI")) {
             loadPlaceholderAPI();
-        } else if (pluginName.equalsIgnoreCase("TagAPI")) {
-            loadTagAPI();
         } else if (pluginName.equalsIgnoreCase("WorldEdit")) {
             loadWorldEdit();
         } else if (pluginName.equalsIgnoreCase("WorldGuard")) {
@@ -66,13 +57,11 @@ public class BAPluginListener implements Listener {
 
     public void loadAll() {
         loadBattleTracker();
-        loadCombatTag();
         loadEssentials();
         loadMultiInv();
         loadMultiverseCore();
         loadMultiverseInventory();
         loadPlaceholderAPI();
-        loadTagAPI();
         loadWorldEdit();
         loadWorldGuard();
         loadVault();
@@ -90,17 +79,6 @@ public class BAPluginListener implements Listener {
         }
     }
 
-    public void loadCombatTag() {
-        Plugin plugin = Bukkit.getPluginManager().getPlugin("CombatTag");
-        if (plugin != null) {
-            Log.info("[BattleArena] CombatTag detected, enabling limited tag support");
-        }
-        if (CombatTagUtil.getCombatTagInterface() instanceof TagsOn) {
-            Log.info("[BattleArena] CombatTagInterface is turned ON");
-        } else if (CombatTagUtil.getCombatTagInterface() instanceof TagsOff) {
-            Log.info("[BattleArena] CombatTagInterface is turned OFF");
-        }
-    }
 
     public void loadEssentials() {
         if (!EssentialsController.enabled()) {
@@ -174,15 +152,6 @@ public class BAPluginListener implements Listener {
         }
     }
 
-    public void loadTagAPI() {
-        if (!TagAPIController.enabled()) {
-            Plugin plugin = Bukkit.getPluginManager().getPlugin("TagAPI");
-            if (plugin != null) {
-                TagAPIController.setEnable(true);
-                Log.info("[BattleArena] TagAPI detected. Implementing Team colored player names");
-            }
-        }
-    }
 
     public void loadVault() {
         Plugin plugin = Bukkit.getPluginManager().getPlugin("Vault");

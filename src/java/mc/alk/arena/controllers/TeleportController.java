@@ -16,7 +16,6 @@ import mc.alk.arena.objects.ArenaPlayer;
 import mc.alk.arena.util.Log;
 import mc.alk.arena.util.PermissionsUtil;
 import mc.alk.arena.util.PlayerUtil;
-import mc.alk.arena.util.plugins.CombatTagUtil;
 import mc.alk.battlebukkitlib.InventoryUtil;
 import mc.euro.bukkitinterface.BukkitInterface;
 
@@ -83,8 +82,6 @@ public class TeleportController implements Listener {
             /// or game states ... lets not let this happen
             PermissionsUtil.givePlayerInventoryPerms(player);
 
-            /// CombatTag will prevent teleports
-            CombatTagUtil.untag(player);
 
             /// Give bypass perms for Teleport checks like noTeleport, and noChangeWorld
             if (giveBypassPerms && BattleArena.getSelf().isEnabled() && !Defaults.DEBUG_STRESS) {

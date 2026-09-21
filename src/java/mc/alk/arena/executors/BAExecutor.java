@@ -92,7 +92,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import mc.alk.arena.util.plugins.CombatTagUtil;
+
 
 /**
  *
@@ -1493,13 +1493,6 @@ public class BAExecutor extends CustomCommandExecutor {
             return false;
         }
 
-        /// Check for player in combat
-        if (CombatTagUtil.isTagged(player.getPlayer())) {
-            if (showMessages) {
-                sendMessage(player, "&cYou are in combat!");
-            }
-            return false;
-        }
 
         /// Inside an Event?
         Event ae = insideEvent(player);
