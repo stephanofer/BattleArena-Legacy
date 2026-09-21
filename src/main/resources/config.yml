@@ -64,13 +64,13 @@ useSignPerms: false
 
 ### Option sets allow you to give an easy to remember name for a group of options
 # you can add as many of your own as you want
-# storeAll: with options [storeExperience, storeGamemode, storeHealth, storeHunger, storeItems, storeHeroclass, storeMagic, clearExperience, clearInventory, deEnchant]
-# restoreAll: with options [restoreExperience, restoreGamemode, restoreHealth, restoreHunger, restoreItems, restoreHeroclass, restoreMagic, clearInventory, deEnchant]
+# storeAll: with options [storeExperience, storeGamemode, storeHealth, storeHunger, storeItems, clearExperience, clearInventory, deEnchant]
+# restoreAll: with options [restoreExperience, restoreGamemode, restoreHealth, restoreHunger, restoreItems, clearInventory, deEnchant]
 optionSets:
   storeAll1:
-      options: [storeExperience, storeGamemode, storeHealth, storeHunger, storeItems, storeHeroclass, storeMagic, clearExperience, clearInventory, deEnchant]
+      options: [storeExperience, storeGamemode, storeHealth, storeHunger, storeItems, clearExperience, clearInventory, deEnchant]
   restoreAll1:
-      options: [restoreExperience, restoreGamemode, restoreHealth, restoreHunger, restoreItems, restoreHeroclass, restoreMagic, clearInventory, deEnchant]
+      options: [restoreExperience, restoreGamemode, restoreHealth, restoreHunger, restoreItems, clearInventory, deEnchant]
 
 ## default Options (these can be overridden by each match/event type)
 defaultOptions:

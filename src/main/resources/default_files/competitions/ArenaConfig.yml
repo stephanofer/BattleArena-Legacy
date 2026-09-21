@@ -21,8 +21,6 @@ Arena:
     - storeItems
     - storeHealth
     - storeHunger
-    - storeMagic
-    - storeHeroClass
     - clearInventory
     - clearExperience
     - deEnchant
@@ -35,8 +33,6 @@ Arena:
     - restoreItems
     - restoreHealth
     - restoreHunger
-    - restoreMagic
-    - restoreHeroClass
     - clearInventory
     - deEnchant
   onStart:

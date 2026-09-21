@@ -81,9 +81,11 @@ tasks.shadowJar {
     destinationDirectory.set(layout.projectDirectory.dir("target"))
     archiveClassifier.set("")
 
-    // Excluir clases de JUnit que vienen dentro de BattleScoreboardAPI:2.0
+    // Excluir clases de JUnit y artefactos que vienen dentro de BattleScoreboardAPI:2.0
     // (equivalente al filter del maven-shade-plugin en pom.xml)
     exclude("junit/**")
+    exclude("stylesheet.css")
+    exclude("META-INF/maven/**")
 
     relocate("mc.euro.version", "mc.alk.arena.alib.version")
     relocate("mc.euro.bukkitadapter", "mc.alk.arena.alib.bukkitadapter")

@@ -27,9 +27,6 @@ disabledCommands: [home, spawn, payhome, warp, watch, sethome, ma]
 # pero no el la partida
 disabledQueueCommands: []
 
-# Que habilidades del plugin 'Heroes' deberian de ser deshabilitadas
-disabledHeroesSkills: []
-
 # Si en 'true' los objetos no stackeables podran ser stackeados
 # Ejemplos: 64 sopas de hongos, o 64 bolas de nieve, en lugar de 1 o 16
 ignoreMaxStackSize: false
@@ -51,13 +48,13 @@ enableInvisibleTeleportFix: true
 
 ### Option sets te permiten crear un grupo de objetos a recuperar
 # puedes añadir cuantas gustes
-# storeAll: las opciones [storeExperience, storeGamemode, storeHealth, storeHunger, storeItems, storeHeroclass, storeMagic, clearExperience, clearInventory, deEnchant]
-# restoreAll: las opciones [restoreExperience, restoreGamemode, restoreHealth, restoreHunger, restoreItems, restoreHeroclass, restoreMagic, clearInventory, deEnchant]
+# storeAll: las opciones [storeExperience, storeGamemode, storeHealth, storeHunger, storeItems, clearExperience, clearInventory, deEnchant]
+# restoreAll: las opciones [restoreExperience, restoreGamemode, restoreHealth, restoreHunger, restoreItems, clearInventory, deEnchant]
 optionSets:
   storeAll1:
-      options: [storeExperience, storeGamemode, storeHealth, storeHunger, storeItems, storeHeroclass, storeMagic, clearExperience, clearInventory, deEnchant]
+      options: [storeExperience, storeGamemode, storeHealth, storeHunger, storeItems, clearExperience, clearInventory, deEnchant]
   restoreAll1: 
-      options: [restoreExperience, restoreGamemode, restoreHealth, restoreHunger, restoreItems, restoreHeroclass, restoreMagic, clearInventory, deEnchant]
+      options: [restoreExperience, restoreGamemode, restoreHealth, restoreHunger, restoreItems, clearInventory, deEnchant]
 
 ## Opciones por defecto (estas pueden ser sobrepasadas por las especificas de cada evento)
 defaultOptions:
@@ -106,9 +103,7 @@ defaultOptions:
     #### Anuncios de Partida/Evento ####
     ## Esto solo afecta los mensajes en el servidor mas no los que recibe cada lichador
     ## announce : anuncia estos mensajes
-    ## dontannounce : no anunsie este mensaje
-    ## server : use herochat con el canal especificado
-    ## herochat=<channel> : use herochat con el canal especificado
+    ## server : envia al servidor general
     announcements:
         onPreStart: [ announce, server ]  ## evento apunto de ocurrir ejemplo, 'P1[p1Elo] vs P2[p2elo]'
         onStart: [ dontannounce ]  ## partida empezando
